@@ -1,0 +1,31 @@
+[Unit]
+Description=CAMAI IR-Bridge (IntelliReader validation observer)
+Documentation=file:///usr/share/doc/camai-irbridge/README.md
+After=network-online.target mosquitto.service
+Wants=network-online.target
+
+[Service]
+Type=notify
+ExecStartPre=/usr/bin/irbridged --check-config --config /etc/camai/irbridge.yaml
+ExecStart=/usr/bin/irbridged --config /etc/camai/irbridge.yaml
+ExecReload=/bin/kill -HUP $MAINPID
+User=camai-irbridge
+Group=camai-irbridge
+AmbientCapabilities=CAP_NET_RAW CAP_NET_ADMIN
+CapabilityBoundingSet=CAP_NET_RAW CAP_NET_ADMIN
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ReadWritePaths=/var/lib/camai/irbridge
+StateDirectory=camai/irbridge
+StateDirectoryMode=0700
+UMask=0077
+Restart=always
+RestartSec=2
+WatchdogSec=30
+TimeoutStopSec=10
+LimitCORE=0
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,15 @@
+syntax = "proto2";
+
+package contactless.indication;
+
+// Type of indication used during transaction
+enum Indication {
+    // Full indication: processing of card, card decision
+    FULL = 0;
+
+    // Disable indication
+    NONE = 1;
+
+    // Do not indicate transaction decision
+    PROCESSING_ONLY = 2;
+}

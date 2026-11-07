@@ -1,0 +1,75 @@
+syntax = "proto2";
+
+package complex.poll;
+
+import "contactless/poll_for_token.proto";
+import "contactless/token.proto";
+import "contactless/transaction.proto";
+import "gui/screen.proto";
+import "misc/leds.proto";
+import "qrcode/poll_for_qrcode.proto";
+import "qrcode/qrcode_event.proto";
+import "touchscreen/poll_touchscreen.proto";
+import "touchscreen/touchscreen_event.proto";
+import "troika/av3/read_ticket.proto";
+
+// Poll multiple reader interfaces for an event
+message PollForEvent {
+    oneof contactless {
+        // Poll for contactless token
+        contactless.poll.PollForToken poll_for_token = 1;
+
+        // Poll for contactless token and then perform transaction
+        contactless.transaction.PerformTransaction perform_txn = 2;
+    }
+
+    // Poll touchscreen for pressed GUI widget
+    optional touchscreen.poll.PollTouchscreen poll_touchscreen = 3;
+
+    // Poll for QR-code/Barcode
+    optional qrcode.poll.PollForQrCode poll_for_qrcode = 4;
+
+    // Perform an user interface action on the start of the polling
+    optional UserInterface on_start_ui_action = 5;
+
+    // Perform an user interface action if an event is occured
+    optional UserInterface on_event_ui_action = 6;
+
+    // Perform an action if a Mifare card has been presented
+    optional MifareCardAction on_mifare_card_present = 7;
+}
+
+message UserInterface {
+    // Sets new state of the LEDs
+    optional misc.leds.Leds set_leds_state = 1;
+    
+    // Shows user-defined screen on the reader's display
+    optional gui.screen.ShowScreen show_screen = 2;
+}
+
+message MifareCardAction {
+    oneof action {
+        // Reads logical ticket out of the Troika card
+        troika.av3.read_ticket.ReadTicket troika_av3_read_ticket = 1;
+    }
+}
+
+// Event occured during polling
+message Event {
+    oneof event {
+        // Contactless token has been detected
+        contactless.token.Token contactless_token = 1;
+
+        // Contactless Transaction has been performed
+        contactless.transaction.TransactionResult contactless_txn_result = 2;
+
+        // GUI widget has been pressed
+        touchscreen.event.TouchscreenEvent touchscreen_event = 3;
+
+        // QR-code/Barcode has been detected
+        qrcode.event.QrCodeEvent qrcode = 4;
+
+        // Logical ticket of the Troika card
+        troika.av3.read_ticket.Ticket troika_ticket = 5;
+    }
+}

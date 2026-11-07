@@ -1,0 +1,33 @@
+syntax = "proto2";
+
+package gui.picture_id;
+
+// Built-in picture identifier
+enum PictureId {
+    // Operation has been approved (accepted), 200x148
+    APPROVED = 0;
+
+    // Operation has been rejected (declined), 148x148
+    REJECTED = 1;
+
+    // EMV symbol means "place contacless cards here", 160x96
+    EMV_CONTACTLESS_SYMBOL = 2;
+
+    // Awaiting something, 82x129
+    AWAITING = 3;
+
+    // Operation has been approved (accepted) with discount, 200x148
+    APPROVED_DISCOUNT = 4;
+
+    // MasterCard logotype, 62x39
+    MASTERCARD_LOGO = 10;
+
+    // VISA logotype, 76x39
+    VISA_LOGO = 11;
+
+    // MIR payment card logotype, 83x39
+    MIR_LOGO = 12;
+
+    // UNIONPAY payment card logotype, 55x39
+    UNIONPAY_LOGO = 13;
+}

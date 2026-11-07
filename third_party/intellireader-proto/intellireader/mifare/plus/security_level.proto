@@ -1,0 +1,18 @@
+syntax = "proto2";
+
+package mifare.plus.security_level;
+
+// Security Level of Mifare Plus Card Authentication
+enum SecurityLevel {
+    // Security Level 0
+    SL0 = 0;
+
+    // Security Level 1
+    SL1 = 1;
+
+    // Security Level 2
+    SL2 = 2;
+
+    // Security Level 3
+    SL3 = 3;
+}

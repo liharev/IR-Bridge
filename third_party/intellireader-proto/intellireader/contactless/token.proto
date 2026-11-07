@@ -1,0 +1,22 @@
+syntax = "proto2";
+
+import "contactless/token_type.proto";
+
+package contactless.token;
+
+message Token {
+    // Type of the token
+    required contactless.token_type.TokenType type = 1;
+
+    // Token's unique ID or serial number
+    required bytes id = 2;
+
+    // Token response to ISO14443-4A Request ATS command
+    optional bytes answer_to_select = 3;
+
+    // Response to WUPA
+    optional bytes atqa = 4;
+
+    // Final response to ISO14443-3A SELECT - Select Acknowledge (SAK)
+    optional bytes sak = 5;
+}

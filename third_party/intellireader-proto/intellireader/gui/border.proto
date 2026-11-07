@@ -1,0 +1,27 @@
+syntax = "proto2";
+
+package gui.border;
+
+import "gui/background.proto";
+
+message Border {
+    // Style of the border
+    required BorderStyle style = 1;
+
+    // Color of the border
+    optional gui.background.Background color = 2;
+
+    // Width (thickness) of the border in pixels
+    optional uint32 width = 3;
+}
+
+enum BorderStyle {
+    // A single line segment
+    SOLID_BORDER = 0;
+
+    // Looks as if the content on the inside of the border is coming out of the canvas
+    OUTSET_BORDER = 1;
+
+    // Looks as if the content on the inside of the border is sunken into the canvas
+    INSET_BORDER = 2;
+}

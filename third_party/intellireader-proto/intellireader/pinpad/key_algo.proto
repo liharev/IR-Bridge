@@ -1,0 +1,24 @@
+syntax = "proto2";
+
+package pinpad.key_algo;
+
+// Cryptographic algorithm
+enum Algorithm {
+    // Unknown algorithm
+    UNKNOWN_ALGORITHM = 0;
+
+    // Advanced Encryption Standard (AES) algorithm
+    AES = 1;
+
+    // Triple DES (3DES or TDES) algorithm, Triple Data Encryption Algorithm (TDEA or Triple DEA)
+    TRIPLE_DES = 2;
+
+    // NXP Crypto1 stream encryption algorithm used for Mifare Classic
+    CRYPTO1 = 3;
+
+    // HMAC-SHA1
+    HMAC_SHA1 = 4;
+
+    // HMAC-SHA256
+    HMAC_SHA256 = 5;
+}

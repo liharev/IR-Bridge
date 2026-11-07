@@ -1,0 +1,51 @@
+syntax = "proto2";
+
+package common.notification;
+
+message Notification {
+    oneof notification {
+        LogMessage log_message = 1;
+        UserMessage user_message = 2;
+        KernelMessage kernel_message = 3;
+        SecureEntryStatus secure_entry_status = 4;
+    }
+}
+
+// Message intended for debug/maintenance purposes
+message LogMessage {
+    enum Importance {
+        EMERGENCY = 1;
+        ALERT     = 2;
+        CRITICAL  = 3;
+        ERROR     = 4;
+        WARNING   = 5;
+        NOTICE    = 6;
+        INFO      = 7;
+        DEBUG     = 8;
+    }
+
+    required Importance level = 1;
+    required string     msg   = 2;
+}
+
+// Message intended for user/cardholder
+message UserMessage {
+    enum MessageId {
+        // Contactless collision detected, present one card only
+        PRESENT_ONE_CARD_ONLY = 0;
+    }
+
+    required MessageId message_id = 1;
+}
+
+// Message intended to carry kernel specific information
+message KernelMessage {
+    // Contains kernel specific message with arbitrary encoding
+    required bytes blob = 1;
+}
+
+// Current status of the secure entry
+message SecureEntryStatus {
+    // Length of the text in the input line
+    required uint32 text_length = 1;
+}

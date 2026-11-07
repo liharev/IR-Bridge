@@ -1,0 +1,24 @@
+syntax = "proto2";
+
+package gui.screen;
+
+import "gui/background.proto";
+import "gui/foreground.proto";
+import "gui/widget.proto";
+import "gui/border.proto";
+
+// Show user-defined screen on the reader's display
+message ShowScreen {
+    // Screen root widget
+    required gui.widget.Widget root = 1;
+
+    // Screen background, SOLID_FILL_BLACK by default
+    optional gui.background.Background background = 2;
+
+    // Screen foreground color, SOLID_FILL_WHITE by default
+    optional gui.foreground.Foreground foreground = 3;
+
+    // Optional border around the display edge
+    optional gui.border.Border border = 4;
+}
+

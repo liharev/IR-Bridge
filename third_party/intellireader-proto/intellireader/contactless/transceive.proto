@@ -1,0 +1,29 @@
+syntax = "proto2";
+
+package contactless.transceive;
+
+message TransceiveBitArray {
+	// Array of bits to send
+	required BitArray bit_array = 1;
+
+	// Time for waiting for answer in microseconds
+	required uint32 response_timeout_us = 2;
+
+	// Generate and transmit CRC along with `bit_array`
+	optional bool tx_crc = 3 [default = false];
+
+	// Check CRC in the response and then cut it off
+	optional bool rx_crc = 4 [default = false];
+
+	// Generate/check parity bit in the TX/RX data
+	optional bool parity = 5 [default = false];
+}
+
+// Array of arbitrary count of bits
+message BitArray {
+	// Array of bits grouped by eight bits in one byte
+	required bytes data = 1;
+
+	// Count of bits in `data` array
+	required uint32 count = 2;
+}

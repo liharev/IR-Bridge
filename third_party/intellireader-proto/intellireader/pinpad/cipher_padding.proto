@@ -1,0 +1,20 @@
+syntax = "proto2";
+
+package pinpad.cipher_padding;
+
+enum CipherPadding {
+    // Never pad (full blocks only)
+    NONE = 0;
+
+    // PKCS7 padding
+    PKCS7 = 1;
+
+    // ISO/IEC 7816-4 padding
+    ONE_AND_ZEROS = 2;
+
+    // ANSI X.923 padding
+    ZEROS_AND_LEN = 3;
+
+    // Zero padding (not reversible)
+    ZEROS = 4;
+}

@@ -1,0 +1,27 @@
+syntax = "proto2";
+
+package turnstile.passage;
+
+// Allows one pass through turnstile
+message AllowOnePass {
+    // Max time for passing through turnstile
+    required uint32 timeout_ms = 1;
+
+    oneof open_signal {
+        // Hold active level to keep turnstile openned (used by default)
+        HoldLevel hold_level = 2;
+
+        // Send one short signal impulse to open turnstile
+        OneImpulse one_impulse = 3;
+    }
+}
+
+message HoldLevel {
+}
+
+message OneImpulse {
+    // Duration of the impulse in milliseconds
+    required uint32 duration_ms = 1;
+}
+
+// No data carried with successful response

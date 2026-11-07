@@ -1,0 +1,8 @@
+# Card presented, the controller shows nothing within the decision window.
+start: "2026-11-07T08:00:00.000+03:00"
+steps:
+  - { action: open, validator: 10.42.0.11 }
+  - { action: bank_card, validator: 10.42.0.11 }
+  - { action: idle_poll, validator: 10.42.0.11, count: 3 }
+  - { action: wait, ms: 5000 }
+  - { action: close, validator: 10.42.0.11 }

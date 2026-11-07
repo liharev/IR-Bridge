@@ -1,0 +1,16 @@
+syntax = "proto2";
+
+package misc.baudrate;
+
+// DEPRECATED
+message ChangeBaudrate {
+    required Baudrate baudrate = 1;
+}
+
+// DEPRECATED
+enum Baudrate {
+    BPS_115200 = 0;
+    BPS_230400 = 1;
+    BPS_460800 = 2;
+    BPS_921600 = 3;
+}

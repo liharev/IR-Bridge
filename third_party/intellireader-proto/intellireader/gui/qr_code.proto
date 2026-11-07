@@ -1,0 +1,15 @@
+syntax = "proto2";
+
+package gui.qr_code;
+
+// The error correction level in a QR Code symbol
+enum ErrorCorrectionLevel {
+    // The QR Code can tolerate about 7% erroneous codewords
+    QRCODE_ECC_LOW = 0;
+    // The QR Code can tolerate about 15% erroneous codewords
+    QRCODE_ECC_MEDIUM = 1;
+    // The QR Code can tolerate about 25% erroneous codewords
+    QRCODE_ECC_QUARTILE = 2;
+    // The QR Code can tolerate about 30% erroneous codewords
+    QRCODE_ECC_HIGH = 3;
+}

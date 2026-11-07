@@ -1,0 +1,13 @@
+syntax = "proto2";
+
+package contactless.iso14443_4a;
+
+// Issue the RATS command to the card
+message RequestForAnswerToSelect {
+}
+
+// Response from the card
+message AnswerToSelect {
+    // Answer to Select data
+    required bytes data = 1;
+}

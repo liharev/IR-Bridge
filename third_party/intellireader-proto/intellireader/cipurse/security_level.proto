@@ -1,0 +1,18 @@
+syntax = "proto2";
+
+package cipurse.security_level;
+
+// Level of Secure Messaging
+enum SecurityLevel {
+    // Data are sent plain, and the transferred APDU does not
+    // include an integrity protection field
+    SM_PLAIN = 0;
+
+    // Integrity protected communication with message
+    // authentication code field (MAC) in the transferred frame, data are sent plain
+    MACED = 1;
+
+    // Confidential communication with encryption of sent data and
+    // integrity protection field in the transferred frame
+    ENCRYPTED = 2;
+}

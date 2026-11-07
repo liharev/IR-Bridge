@@ -1,0 +1,23 @@
+syntax = "proto2";
+
+package misc.reboot;
+
+// Reboots device into one of possible modes of operation
+message Reboot {
+    // Device operation mode
+    enum OperationMode {
+        // In this mode device accepts commands by the protocol
+        NORMAL_MODE = 0;
+
+        // This mode used to manage master keys through touchscreen display or keypad
+        MANAGEMENT_MODE = 1;
+
+        // This mode used only on factory
+        ACTIVATION_MODE = 3;
+    }
+
+    // Operational mode that will used after reboot
+    optional OperationMode mode = 1 [default = NORMAL_MODE];
+}
+
+// No data carried with successful response

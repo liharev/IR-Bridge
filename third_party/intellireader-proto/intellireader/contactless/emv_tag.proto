@@ -1,0 +1,12 @@
+syntax = "proto2";
+
+package contactless.emv_tag;
+
+// Represents EMVCo Tag
+message EmvTag {
+    // Number of tag
+    required uint32 number = 1;
+
+    // Value of tag
+    required bytes value = 2;
+}

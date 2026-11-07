@@ -1,0 +1,28 @@
+syntax = "proto2";
+
+import "mifare/av2/args.proto";
+
+package mifare.ultralight.auth;
+
+// Mifare Ultralight C 3DES Authentication using clear key
+message ClearKey {
+    // Value of the Key (16 bytes)
+    required bytes clear_key = 1;
+}
+
+// Mifare Ultralight C 3DES Authentication using NXP SAM AV2 module
+message SamKey {
+    // Specifies SAM AV2 arguments that will be used in authentication
+    required mifare.av2.args.AuthenticationArguments av2_args = 1;
+
+    // Input value to the Key Diversification Algorithm if required
+    optional bytes diversification_input = 2;
+}
+
+// Mifare Ultralight C 3DES Authentication using key from internal secure storage
+message InternalKey {
+    // Index of the key within internal storage
+    required uint32 key_index = 1;
+}
+
+// No data carried with successful response

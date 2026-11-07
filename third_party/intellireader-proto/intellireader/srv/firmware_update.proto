@@ -1,0 +1,32 @@
+syntax = "proto2";
+
+package srv.firmware_update;
+
+// Prepare device to firmware update
+message Prepare {
+    oneof firmware_info {
+        // DEPRECATED
+        uint32 firmware_image_size = 1;
+
+        // First 128 bytes of the firmware image
+        bytes first_128_bytes = 2;
+    }
+}
+
+// Update block of firmware image
+message UpdateBlock {
+    // Raw data block (max size 4096 bytes)
+    required bytes data = 1;
+}
+
+// Apply saved firmware update
+message Apply {
+    // Restart device if update have been successfully finished
+    optional bool restart = 1 [default = false];
+}
+
+// Rollback updated firmware
+message Rollback {
+}
+
+// No data carried with successful response

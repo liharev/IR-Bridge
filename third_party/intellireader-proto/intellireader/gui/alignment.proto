@@ -1,0 +1,31 @@
+syntax = "proto2";
+
+package gui.alignment;
+
+enum VerticalAlignment {
+    // Centers the element vertically
+    CENTER_VERTICALLY = 0;
+
+    // Aligns the element to the bottom
+    BOTTOM = 1;
+
+    // Aligns the element to the top
+    TOP = 2;
+
+    // Minimizes vertical space usage of the element
+    OPTIMAL_VERTICALLY = 3;
+}
+
+enum HorizontalAlignment {
+    // Centers the element horizontally
+    CENTER_HORIZONTALLY = 0;
+
+    // Aligns the element to the left
+    LEFT = 1;
+
+    // Aligns the element to the right
+    RIGHT = 2;
+
+    // Minimizes horizontal space usage of the element
+    OPTIMAL_HORIZONTALLY = 3;
+}

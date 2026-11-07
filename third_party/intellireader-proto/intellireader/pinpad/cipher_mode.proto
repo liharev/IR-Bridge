@@ -1,0 +1,29 @@
+syntax = "proto2";
+
+import "pinpad/cipher_padding.proto";
+
+package pinpad.cipher_mode;
+
+message CipherMode {
+    // One of cipher mode
+    oneof cipher_mode {
+        // Electronic Code Book (ECB)
+        ECB ecb = 1;
+
+        // Cipher Block Chaining (CBC)
+        CBC cbc = 2;
+    }
+}
+
+// Electronic Code Book (ECB)
+message ECB {
+}
+
+// Cipher Block Chaining (CBC)
+message CBC {
+    // Initialization vector (IV), zeroes if not set
+    optional bytes iv = 1;
+
+    // Input data padding, PKCS7 if not set
+    optional pinpad.cipher_padding.CipherPadding padding = 2 [default = PKCS7];
+}

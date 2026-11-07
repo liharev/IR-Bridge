@@ -1,0 +1,20 @@
+syntax = "proto2";
+
+package contactless.kernel_info;
+
+// Requests reader to return information about embedded EMV kernels
+message GetKernelInfo {
+}
+
+// Embedded EMV kernels information
+message KernelInfo {
+    // List of EMV kernels in the reader
+    repeated Kernel kernels = 1;
+}
+
+message Kernel {
+    // Name of the EMV kernel
+    required string name = 1;
+    // Version of the EMV kernel
+    required string version = 2;
+}

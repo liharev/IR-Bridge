@@ -1,0 +1,22 @@
+syntax = "proto2";
+
+import "pinpad/key_algo.proto";
+
+package pinpad.hmac;
+
+// Compute HMAC hash for arbitrary data using key from internal storage
+message HmacInput {
+    // Index of key within internal storage
+    required uint32 key_index = 1;
+
+    // HMAC algorithm
+    required pinpad.key_algo.Algorithm algorithm = 2;
+
+    // HMAC input data
+    required bytes input_data = 3;
+}
+
+message HmacOutput {
+    // HMAC output data
+    required bytes output_data = 1;
+}

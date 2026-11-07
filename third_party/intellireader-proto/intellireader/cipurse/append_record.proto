@@ -1,0 +1,14 @@
+syntax = "proto2";
+
+package cipurse.append_record;
+
+// Append new cyclic record
+message AppendRecord {
+    // Short File ID
+    required uint32 short_file_id = 1;
+
+    // Record data
+    required bytes data = 2;
+}
+
+// No data carried with successful response

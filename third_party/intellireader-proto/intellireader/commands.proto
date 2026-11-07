@@ -1,0 +1,564 @@
+syntax = "proto2";
+
+import "misc/leds.proto";
+import "misc/device.proto";
+import "misc/reboot.proto";
+import "misc/buzzer.proto";
+import "misc/stats.proto";
+import "misc/echo.proto";
+import "misc/baudrate.proto";
+import "misc/lan_settings.proto";
+import "misc/try_baudrate.proto";
+import "misc/status.proto";
+import "misc/rgb_leds.proto";
+
+import "srv/firmware_update.proto";
+import "srv/diagnostic.proto";
+import "srv/upload_config.proto";
+import "srv/selftest.proto";
+
+import "contactless/poll_for_token.proto";
+import "contactless/transaction.proto";
+import "contactless/emv_removal.proto";
+import "contactless/transceive.proto";
+import "contactless/iso14443_4.proto";
+import "contactless/iso14443_4a.proto";
+import "contactless/rf_field.proto";
+import "contactless/kernel_info.proto";
+
+import "mifare/classic/auth.proto";
+import "mifare/classic/read.proto";
+import "mifare/classic/write.proto";
+import "mifare/classic/bulk.proto";
+
+import "mifare/classic/counter/commit.proto";
+import "mifare/classic/counter/copy.proto";
+import "mifare/classic/counter/get.proto";
+import "mifare/classic/counter/modify.proto";
+import "mifare/classic/counter/set.proto";
+
+import "mifare/classic/sector/read_sector.proto";
+import "mifare/classic/sector/write_sector.proto";
+
+import "mifare/plus/auth.proto";
+import "mifare/plus/read.proto";
+import "mifare/plus/write.proto";
+import "mifare/plus/bulk.proto";
+
+import "mifare/plus/counter/commit.proto";
+import "mifare/plus/counter/copy.proto";
+import "mifare/plus/counter/get.proto";
+import "mifare/plus/counter/modify.proto";
+import "mifare/plus/counter/set.proto";
+
+import "mifare/av2/host_auth.proto";
+import "mifare/av2/change_keyentry.proto";
+import "mifare/av2/unlock.proto";
+
+import "mifare/ultralight/read.proto";
+import "mifare/ultralight/write.proto";
+import "mifare/ultralight/version.proto";
+import "mifare/ultralight/bulk.proto";
+import "mifare/ultralight/auth.proto";
+import "mifare/ultralight/password.proto";
+
+import "mifare/ultralight/counter/get.proto";
+import "mifare/ultralight/counter/increment.proto";
+
+import "mifare/generic/get_version.proto";
+
+import "pinpad/online_pin.proto";
+import "pinpad/inject_secret.proto";
+import "pinpad/list_secrets.proto";
+import "pinpad/cipher.proto";
+import "pinpad/hmac.proto";
+import "pinpad/mac.proto";
+
+import "contact/power_on.proto";
+import "contact/power_off.proto";
+import "contact/iso7816_4.proto";
+import "contact/transaction.proto";
+
+import "sri512/read.proto";
+import "sri512/write.proto";
+
+import "ntag/select.proto";
+import "ntag/auth.proto";
+import "ntag/read.proto";
+import "ntag/write.proto";
+
+import "gui/screen.proto";
+import "gui/input_dialog.proto";
+import "gui/menu_dialog.proto";
+import "gui/draw_bitmap.proto";
+import "gui/slideshow.proto";
+
+import "touchscreen/poll_touchscreen.proto";
+
+import "complex/poll_for_event.proto";
+
+import "qrcode/poll_for_qrcode.proto";
+import "qrcode/exchange.proto";
+
+import "cipurse/append_record.proto";
+import "cipurse/auth.proto";
+import "cipurse/authorize_sam.proto";
+import "cipurse/modify_value.proto";
+import "cipurse/read_binary.proto";
+import "cipurse/read_record.proto";
+import "cipurse/read_value.proto";
+import "cipurse/select.proto";
+import "cipurse/update_binary.proto";
+import "cipurse/update_record.proto";
+
+import "turnstile/passage.proto";
+
+import "troika/av3/read_ticket.proto";
+import "troika/av3/write_ticket.proto";
+
+import "speaker/play_file.proto";
+import "speaker/speaker_test.proto";
+
+// Defines commands for Miscellaneous module
+message Miscellaneous {
+    oneof misc_cmd {
+        // Sets new state of the LEDs
+        misc.leds.Leds set_leds_state = 1;
+
+        // Reads out information about the reader
+        misc.device.ReadDeviceInfo read_device_info = 2;
+
+        // Reboots device to one of operation modes
+        misc.reboot.Reboot reboot_device = 3;
+
+        // Gets device status
+        misc.status.GetDeviceStatus get_device_status = 4;
+
+        // Makes sound on the buzzer
+        misc.buzzer.MakeSound make_sound = 6;
+
+        // Gets various device statistic
+        misc.stats.GetDeviceStatistic get_device_statistic = 7;
+
+        // Replies with the same data
+        misc.echo.GetEcho get_echo = 8;
+
+        // DEPRECATED
+        misc.baudrate.ChangeBaudrate change_baudrate = 9 [deprecated = true];
+
+        // Changes LAN settings (IP-address, netmask & default gateway)
+        misc.lan_settings.ChangeLanSettings change_lan_settings = 10;
+
+        // Tries to change COM-port (UART/RS232) baudrate
+        misc.try_baudrate.TryBaudrate try_baudrate = 11;
+
+        // Confirms COM-port (UART/RS232) baudrate
+        misc.try_baudrate.ConfirmBaudrate confirm_baudrate = 12;
+
+        // Gets list of COM-port (UART/RS232) baudrates that are possible to use
+        misc.try_baudrate.GetPossibleBaudrates get_possible_baudrates = 13;
+
+        // Sets color on all RGB LEDs
+        misc.rgb_leds.SetAllLeds set_all_rgb_leds = 14;
+
+        // Sets color on certain RGB LEDs
+        misc.rgb_leds.SetLeds set_rgb_leds = 15;
+
+        // Sets color on certain RGB LEDs by mask
+        misc.rgb_leds.SetLedsByMask set_rgb_leds_by_mask = 16;
+
+        // Gets RGB LEDs information
+        misc.rgb_leds.GetLedsInfo get_rgb_leds_info = 17;
+
+        // Sets max brightness of RGB LEDs
+        misc.rgb_leds.SetLedsBrightness set_rgb_leds_brightness = 18;
+    }
+}
+
+// Defines commands for Contactless Level1 module
+message ContactlessLevel1 {
+    oneof contactless_level1_cmd {
+        // Polls for contactless token (card)
+        contactless.poll.PollForToken poll_for_token = 1;
+
+        // Runs EMV Removal procedure
+        contactless.emv_removal.EmvRemoval emv_removal = 2;
+
+        // Transceive BitArray to contactless token (card)
+        contactless.transceive.TransceiveBitArray tsv_bit_array = 3;
+
+        // Send ISO14443-4 command to token and receive the response
+        contactless.iso14443_4.Command iso14443_4_command = 4;
+
+        // Power OFF reader's RF field
+        contactless.rf_field.PowerOffField power_off_field = 5;
+
+        // Issue the RATS command to the card
+        contactless.iso14443_4a.RequestForAnswerToSelect request_for_ats = 6;
+    }
+}
+
+// Defines commands for Contactless Level2 module
+message ContactlessLevel2 {
+    oneof contactless_level2_cmd {
+        // Performs contactless transaction
+        contactless.transaction.PerformTransaction perform_transaction = 1;
+
+        // Reads out information about embedded EMV kernels
+        contactless.kernel_info.GetKernelInfo get_kernel_info = 2;
+    }
+}
+
+// Defines commands for Mifare cards module
+message Mifare {
+    oneof mifare_cmd {
+        // Commands for Mifare Classic cards
+
+        // Authenticates Mifare Classic card's sector using clear key
+        mifare.classic.auth.ClearKey mfr_classic_auth_on_clear_key = 1;
+
+        // Authenticates Mifare Classic card's sector using SAMAV2
+        mifare.classic.auth.SamKey mfr_classic_auth_on_sam_key = 2;
+
+        // Reads data blocks from Mifare Classic card
+        mifare.classic.read.ReadBlocks mfr_classic_read_blocks = 3;
+
+        // Writes data blocks to Mifare Classic card
+        mifare.classic.write.WriteBlocks mfr_classic_write_blocks = 4;
+
+        // Combines several Mifare Classic commands into one command
+        mifare.classic.bulk.BulkOperation mfr_classic_bulk_operation = 5;
+
+        // Gets Mifare Classic counter block value
+        mifare.classic.counter.get.GetCounter mfr_classic_get_counter = 6;
+
+        // Sets Mifare Classic counter block value
+        mifare.classic.counter.set.SetCounter mfr_classic_set_counter = 7;
+
+        // Modifies Mifare Classic counter block
+        mifare.classic.counter.modify.ModifyCounter mfr_classic_modify_counter = 8;
+
+        // Copies value of Mifare Classic counter from one block to another
+        mifare.classic.counter.copy.CopyCounter mfr_classic_copy_counter = 9;
+
+        // Commits (writes) value from the internal data register to the block
+        mifare.classic.counter.commit.CommitCounter mfr_classic_commit_counter = 10;
+
+        // Authenticates Mifare Classic card's sector using key from internal secure storage
+        mifare.classic.auth.InternalKey mfr_classic_auth_on_internal_key = 11;
+
+        // Commands for Mifare Plus cards
+
+        // Authenticates Mifare Plus card's sector using clear key
+        mifare.plus.auth.ClearKey mfr_plus_auth_on_clear_key = 16;
+
+        // Reads data blocks from Mifare Plus card
+        mifare.plus.read.ReadBlocks mfr_plus_read_blocks = 17;
+
+        // Writes data blocks to Mifare Plus card
+        mifare.plus.write.WriteBlocks mfr_plus_write_blocks = 18;
+
+        // Combines several Mifare Plus commands into one command
+        mifare.plus.bulk.BulkOperation mfr_plus_bulk_operation = 19;
+
+        // Gets Mifare Plus counter block value
+        mifare.plus.counter.get.GetCounter mfr_plus_get_counter = 20;
+
+        // Sets Mifare Plus counter block value
+        mifare.plus.counter.set.SetCounter mfr_plus_set_counter = 21;
+
+        // Modifies Mifare Plus counter block
+        mifare.plus.counter.modify.ModifyCounter mfr_plus_modify_counter = 22;
+
+        // Copies value of Mifare Plus counter from one block to another
+        mifare.plus.counter.copy.CopyCounter mfr_plus_copy_counter = 23;
+
+        // Commits (writes) value from the internal data register to the block
+        mifare.plus.counter.commit.CommitCounter mfr_plus_commit_counter = 24;
+
+        // Authenticates Mifare Plus card's sector using NXP SAM AV2 module
+        mifare.plus.auth.SamKey mfr_plus_auth_on_sam_key = 25;
+
+        // Authenticates Mifare Plus card's sector using key from internal secure storage
+        mifare.plus.auth.InternalKey mfr_plus_auth_on_internal_key = 26;
+
+        // Commands for Mifare SAM AV2/AV3 cards
+
+        // Performs SAM AV2 Authenticate Host Command
+        mifare.av2.host_auth.AuthenticateHost av2_authenticate_host = 30;
+
+        // Creates/changes SAM AV2 KeyEntry
+        mifare.av2.change_keyentry.ChangeKeyEntry av2_change_keyentry = 31;
+
+        // Unlock SAM AV2 using mutual authentication
+        mifare.av2.unlock.Unlock av2_unlock = 32;
+
+        // Commands for Mifare Ultralight family
+
+        // Read Mifare Ultralight pages
+        mifare.ultralight.read.ReadPages mfr_ul_read_pages = 36;
+
+        // Write pages to Mifare Ultralight
+        mifare.ultralight.write.WritePages mfr_ul_write_pages = 37;
+
+        // Run Mifare Ultralight EV1 GET_VERSION command
+        mifare.ultralight.version.GetVersion mfr_ul_get_version = 38;
+
+        // Read value of Mifare Ultralight EV1 built-in counter
+        mifare.ultralight.counter.get.GetCounter mfr_ul_get_counter = 39;
+
+        // Increment Mifare Ultralight EV1 built-in counter
+        mifare.ultralight.counter.increment.IncrementCounter mfr_ul_increment_counter = 40;
+
+        // Combines several Mifare Ultralight commands into one command
+        mifare.ultralight.bulk.BulkOperation mfr_ul_bulk_operation = 41;
+
+        // Mifare Ultralight C 3DES Authentication using clear key
+        mifare.ultralight.auth.ClearKey mfr_ul_auth_on_clear_key = 42;
+
+        // Mifare Ultralight C 3DES Authentication using SAM AV2
+        mifare.ultralight.auth.SamKey mfr_ul_auth_on_sam_key = 43;
+
+        // Mifare Ultralight EV1 password based Authentication using clear key
+        mifare.ultralight.password.ClearPassword mfr_ul_auth_clear_password = 44;
+
+        // Mifare Ultralight EV1 password based Authentication using NXP SAM AV3 module
+        mifare.ultralight.password.SamPassword mfr_ul_auth_sam_password = 45;
+
+        // Mifare Ultralight C 3DES Authentication using key from internal secure storage
+        mifare.ultralight.auth.InternalKey mfr_ul_auth_on_internal_key = 46;
+    }
+}
+
+// Defines commands for internal PIN entry module (PinPad)
+message PinPad {
+    oneof pinpad_cmd {
+        // Asks cardholder to enter PIN and returns encrypted PIN-block
+        pinpad.online_pin.EnterOnlinePin online_pin = 1;
+
+        // Prepare pinpad to inject a secret
+        pinpad.inject_secret.PrepareInjection prepare_injection = 2;
+
+        // Inject a secret into secure pinpad storage
+        pinpad.inject_secret.InjectSecret inject_secret = 3;
+
+        // Return list of injected secrets
+        pinpad.list_secrets.ListSecrets list_secrets = 4;
+
+        // Encrypt/decrypt arbitrary data using key from internal storage
+        pinpad.cipher.CipherInput cipher = 5;
+
+        // Compute HMAC hash for arbitrary data using key from internal storage
+        pinpad.hmac.HmacInput hmac = 6;
+
+        // Generate MAC for arbitrary data using key from internal storage
+        pinpad.mac.GenerateMac generate_mac = 7;
+    }
+}
+
+// Defines commands for contact Card (SAM)
+message ContactLevel1 {
+    oneof contact_level1_cmd {
+        // Power on Card (SAM)
+        contact.power_on.PowerOnCard power_on_card = 1;
+
+        // Power off Card (SAM)
+        contact.power_off.PowerOffCard power_off_card = 2;
+
+        // Transmit Application PDU (APDU) to Card (SAM)
+        contact.iso7816_4.TransmitApdu transmit_apdu = 3;
+    }
+}
+
+// Defines commands for contact Card (SAM) Level 2
+message ContactLevel2 {
+    oneof contact_level2_cmd {
+        // Performs contact transaction
+        contact.transaction.PerformTransaction perform_contact_transaction = 1;
+    }
+}
+
+// Defines commands for Service module
+message Service {
+    oneof srv_cmd {
+        // Prepare device to firmware update
+        srv.firmware_update.Prepare prepare_update = 4;
+
+        // Update block of firmware image
+        srv.firmware_update.UpdateBlock update_block = 5;
+
+        // Apply saved firmware update
+        srv.firmware_update.Apply apply_update = 6;
+
+        // Rollback firmware update
+        srv.firmware_update.Rollback rollback_update = 7;
+
+        // DEPRECATED in favor of srv.selftest.RunSelfTest
+        srv.diagnostic.GetDiagnostic get_diagnostic = 8;
+
+        // Prepare device to upload configuration
+        srv.upload_config.Prepare prepare_for_config = 9;
+
+        // Upload one block of the configuration
+        srv.upload_config.UploadBlock upload_block_of_config = 10;
+
+        // Check uploaded configuration
+        srv.upload_config.CheckConfiguration check_configuration = 11;
+
+        // Run self-test
+        srv.selftest.RunSelfTest run_selftest = 12;
+    }
+}
+
+// Defines commands for STMicroelectronics cards module
+message StmCard {
+    oneof stmcard_cmd {
+        // Reads multiple blocks from STM SRI 512 card
+        stmcard.sri512.read.ReadBlocks stm_sri512_read_blocks = 1;
+
+        // Writes multiple blocks to STM SRI 512 card
+        stmcard.sri512.write.WriteBlocks stm_sri512_write_blocks = 2;
+    }
+}
+
+// Defines commands for NXP NTAG cards module
+message NtagCard {
+    oneof ntagcard_cmd {
+        // Selects file on the card's filesystem
+        ntag.select.SelectFile ntag_select_file = 1;
+
+        // Authenticates card by the plaintext key
+        ntag.auth.ClearKey ntag_auth_on_clear_key = 2;
+
+        // Reads out file from the card
+        ntag.read.ReadFile ntag_read_file = 3;
+
+        // Writes down raw data to the file on the card
+        ntag.write.WriteFile ntag_write_file = 4;
+
+        // Authenticates card by the key from internal secure storage
+        ntag.auth.InternalKey ntag_auth_on_internal_key = 5;
+    }
+}
+
+// Defines commands for Graphic User Interface module
+message Gui {
+    oneof gui_cmd {
+        // Shows user-defined screen on the reader's display
+        gui.screen.ShowScreen show_screen = 1;
+
+        // Shows the input screen and interacts with user to enter text
+        gui.input_dialog.InputDialog input_dialog = 2;
+
+        // Shows the menu and interacts with user to select an item
+        gui.menu_dialog.MenuDialog menu_dialog = 3;
+
+        // Draw bitmap on the LCD
+        gui.draw_bitmap.DrawBitmap draw_bitmap = 4;
+
+        // Show pictures as slideshow
+        gui.slideshow.Slideshow slideshow = 5;
+    }
+}
+
+message Touchscreen {
+    oneof touchscreen_cmd {
+        // Poll touchscreen for an event
+        touchscreen.poll.PollTouchscreen poll_touchscreen = 1;
+    }
+}
+
+message Complex {
+    oneof complex_cmd {
+        // Poll multiple reader interfaces for an event
+        complex.poll.PollForEvent poll_for_event = 1;
+    }
+}
+
+message QrCode {
+    oneof qrcode_cmd {
+        // Poll for QR-code event
+        qrcode.poll.PollForQrCode poll_for_qrcode = 1;
+
+        // Send a command to the scanner
+        qrcode.exchange.SendCommand send_command = 2;
+    }
+}
+
+message Cipurse {
+    oneof cipurse_cmd {
+        // Unlock CIPURSE HW SAM in the reader
+        cipurse.sam.AuthorizeHwSam authorize_sam = 1;
+
+        // Select file on the CIPURSE card
+        cipurse.select.SelectFile select_file = 2;
+
+        // Establish secure channel between CIPURSE card and the reader
+        cipurse.auth.EstablishSecureChannel establish_secure_channel = 3;
+
+        // Read binary record content
+        cipurse.read_binary.ReadBinary read_binary = 4;
+
+        // Update binary record content
+        cipurse.update_binary.UpdateBinary update_binary = 5;
+
+        // Read the content of the linear record(s)
+        cipurse.read_record.ReadRecord read_record = 6;
+
+        // Update the content of the linear record(s)
+        cipurse.update_record.UpdateRecord update_record = 7;
+
+        // Append new cyclic record
+        cipurse.append_record.AppendRecord append_record = 8;
+
+        // Read the value of the value-record(s)
+        cipurse.read_value.ReadValue read_value = 9;
+
+        // Increment or decrement the value of the record-value
+        cipurse.modify_value.ModifyValue modify_value = 10;
+    }
+}
+
+message Turnstile {
+    oneof turnstile_cmd {
+        // Allows one pass through turnstile
+        turnstile.passage.AllowOnePass allow_one_pass = 1;
+    }
+}
+
+// Defines extended commands for Mifare cards
+message MifareExtended {
+    oneof mifare_cmd {
+        // Extended commands for Mifare Classic cards
+
+        // Authenticates & reads multiple sectors from Mifare Classic card
+        mifare.classic.sector.read.ReadSectors mfr_classic_read_sectors = 1;
+
+        // Authenticates & writes multiple sectors on Mifare Classic card
+        mifare.classic.sector.write.WriteSectors mfr_classic_write_sectors = 2;
+
+        // Read Product Version Information from generic Mifare card
+        mifare.generic.get_version.GetVersion mfr_get_version = 3;
+    }
+}
+
+// Defines proprietary Troika card commands
+message TroikaCard {
+    oneof troika_cmd {
+        // Reads logical ticket out of the Troika card
+        troika.av3.read_ticket.ReadTicket troika_av3_read_ticket = 1;
+
+        // Prepares bitmap from parameters and writes bitmap on the card
+        troika.av3.write_ticket.WriteTicket troika_av3_write_ticket = 2;
+    }
+}
+
+message Speaker {
+    oneof speaker_cmd {
+        // Plays audio from file on the speaker
+        speaker.play_file.PlayFile play_file = 1;
+
+        // Test the speaker
+        speaker.speaker_test.SpeakerTest speaker_test = 2;
+    }
+}

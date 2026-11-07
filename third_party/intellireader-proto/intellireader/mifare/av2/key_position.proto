@@ -1,0 +1,10 @@
+syntax = "proto2";
+
+package mifare.av2.key_position;
+
+// Position of the key in the SAM AV2 Key Entry
+enum KeyPosition {
+    POSITION_A = 0;
+    POSITION_B = 1;
+    POSITION_C = 2;
+}

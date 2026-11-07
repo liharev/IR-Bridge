@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+if [ "$1" = "configure" ]; then
+  if ! getent passwd camai-irbridge >/dev/null; then
+    adduser --system --group --no-create-home --home /var/lib/camai/irbridge camai-irbridge
+  fi
+  install -d -m 0700 -o camai-irbridge -g camai-irbridge /var/lib/camai/irbridge
+  chown root:camai-irbridge /etc/camai/irbridge.yaml
+  chmod 0640 /etc/camai/irbridge.yaml
+  if [ -d /run/systemd/system ]; then
+    systemctl daemon-reload >/dev/null || true
+    systemctl enable camai-irbridge.service >/dev/null || true
+    systemctl restart camai-irbridge.service || true
+  fi
+fi
+exit 0

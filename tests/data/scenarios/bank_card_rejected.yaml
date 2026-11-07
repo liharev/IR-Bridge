@@ -1,0 +1,9 @@
+# Bank card declined: controller shows REJECTED.
+start: "2026-11-07T08:00:00.000+03:00"
+steps:
+  - { action: open, validator: 10.42.0.11 }
+  - { action: bank_card, validator: 10.42.0.11, aid: "A0000000031010", uid: "1A2B3C4D" }
+  - { action: wait, ms: 300 }
+  - { action: indicate, validator: 10.42.0.11, kind: reject, via: picture }
+  - { action: wait, ms: 4000 }
+  - { action: close, validator: 10.42.0.11 }

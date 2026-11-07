@@ -1,0 +1,33 @@
+syntax = "proto2";
+
+import "pinpad/cipher_mode.proto";
+import "pinpad/cipher_operation.proto";
+import "pinpad/key_algo.proto";
+
+package pinpad.cipher;
+
+// Encrypt/decrypt arbitrary data using key from internal storage
+message CipherInput {
+    // Cipher operation on data
+    required pinpad.cipher_operation.CipherOperation operation = 1;
+
+    // Index of cipher key within internal storage
+    required uint32 key_index = 2;
+
+    // Cipher algorithm
+    required pinpad.key_algo.Algorithm algorithm = 3;
+
+    // Cipher input data
+    required bytes input_data = 4;
+
+    // Cipher mode
+    optional pinpad.cipher_mode.CipherMode cipher_mode = 5;
+}
+
+message CipherOutput {
+    // Cipher output data
+    required bytes output_data = 1;
+
+    // Key Serial Number (KSN) in case of DUKPT key used
+    optional bytes ksn = 2;
+}

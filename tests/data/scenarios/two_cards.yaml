@@ -1,0 +1,10 @@
+# A second, different card arrives before a decision on the first: first -> NO_DECISION.
+start: "2026-11-07T08:00:00.000+03:00"
+steps:
+  - { action: open, validator: 10.42.0.11 }
+  - { action: bank_card, validator: 10.42.0.11, uid: "0E264417" }
+  - { action: wait, ms: 500 }
+  - { action: bank_card, validator: 10.42.0.11, uid: "5F6E7D8C", aid: "A0000000041010" }
+  - { action: indicate, validator: 10.42.0.11, kind: approve, via: picture }
+  - { action: wait, ms: 4000 }
+  - { action: close, validator: 10.42.0.11 }

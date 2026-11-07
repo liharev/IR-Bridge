@@ -1,0 +1,24 @@
+syntax = "proto2";
+
+import "mifare/classic/sector/sector.proto";
+import "mifare/classic/write.proto";
+import "mifare/classic/counter/modify.proto";
+
+package mifare.classic.sector.write;
+
+// Write multiple sectors data except trailing block
+message WriteSectors {
+    // Sectors to be write
+    repeated WriteSector sectors = 1;
+}
+
+message WriteSector {
+    // Sector to be write
+    required mifare.classic.sector.sector.Sector sector = 1;
+
+    // Sector blocks to be write
+    optional mifare.classic.write.WriteBlocks blocks = 2;
+
+    // Sector counters to be modified
+    repeated mifare.classic.counter.modify.ModifyCounter counters = 3;
+}

@@ -1,0 +1,47 @@
+syntax = "proto2";
+
+package srv.upload_config;
+
+import "srv/config_region.proto";
+
+// Prepare device to upload a configuration file
+message Prepare {
+    // Size of the configuration file in bytes
+    required uint32 config_size = 1;
+
+    // Region of the internal storage
+    optional srv.config.Region region = 2 [default = COMMON];
+}
+
+// Update a block of a configuration file
+message UploadBlock {
+    // Raw data block (max size 4096 bytes)
+    required bytes data = 1;
+}
+
+// Check uploaded configuration
+message CheckConfiguration {
+    // Region of the internal storage
+    optional srv.config.Region region = 1 [default = COMMON];
+}
+
+// Uploaded configuration
+message Configuration {
+    // Files withing configuration
+    repeated File files = 1;
+
+    // CRC32 of the configuration
+    optional uint32 crc32 = 2;
+}
+
+// File in the configuration
+message File {
+    // File name
+    required bytes name = 1;
+
+    // File size
+    required uint32 size = 2;
+
+    // CRC32 value of the file
+    required uint32 crc32 = 3;
+}

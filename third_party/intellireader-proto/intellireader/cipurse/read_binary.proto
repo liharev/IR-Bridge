@@ -1,0 +1,20 @@
+syntax = "proto2";
+
+package cipurse.read_binary;
+
+// Read binary record content
+message ReadBinary {
+    // Short File ID to be read
+    required uint32 short_file_id = 1;
+
+    // How many bytes read
+    required uint32 length = 2;
+
+    // File offset if any
+    optional uint32 offset = 3 [default = 0];
+}
+
+message Binary {
+    // Binary record data
+    required bytes data = 1;
+}

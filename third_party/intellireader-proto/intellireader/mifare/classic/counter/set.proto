@@ -1,0 +1,14 @@
+syntax = "proto2";
+
+package mifare.classic.counter.set;
+
+// Writes counter into memory block
+message SetCounter {
+    // Destination block _within_ sector
+    required uint32 dst_block = 1;
+
+    // Value of counter
+    required int32 value = 2;
+}
+
+// No data carried with successful response

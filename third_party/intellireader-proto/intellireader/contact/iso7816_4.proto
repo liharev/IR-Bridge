@@ -1,0 +1,21 @@
+syntax = "proto2";
+
+import "contact/card_slot.proto";
+
+package contact.iso7816_4;
+
+message TransmitApdu {
+    // Card slot in the reader
+    required contact.card_slot.CardSlot slot = 1;
+
+    // Contains mandatory header (4 bytes) and optional body of variable length
+    required bytes command_apdu = 2;
+}
+
+message ResponseApdu {
+    // Conditional body of variable length
+    optional bytes body = 1;
+
+    // Mandatory trailer of 2 bytes (SW1 SW2), example: 0x9000
+    required uint32 trailer = 2;
+}

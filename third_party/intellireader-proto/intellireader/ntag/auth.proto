@@ -1,0 +1,23 @@
+syntax = "proto2";
+
+package ntag.auth;
+
+// Authenticates NTAG card using clear key
+message ClearKey {
+    // Number of the Key in NTAG card
+    required uint32 key_on_card = 1;
+
+    // Value of the Key (16 bytes)
+    required bytes clear_key = 2;
+}
+
+// Authenticates NTAG card using key from internal secure storage
+message InternalKey {
+    // Number of the Key in NTAG card
+    required uint32 key_on_card = 1;
+
+    // Index of the key within internal storage
+    required uint32 key_index = 2;
+}
+
+// No data carried with successful response

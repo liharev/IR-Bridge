@@ -1,0 +1,20 @@
+syntax = "proto2";
+
+import "ntag/file.proto";
+import "ntag/comm.proto";
+
+package ntag.write;
+
+// Write raw data to file
+message WriteFile {
+    // File to be write
+    required ntag.file.File file = 1;
+
+    // Raw data
+    required bytes data = 2;
+
+    // Protection used during transmission
+    optional ntag.comm.Protection protection = 3 [default = ENCRYPTED_WITH_MAC];
+}
+
+// No data carried with successful response

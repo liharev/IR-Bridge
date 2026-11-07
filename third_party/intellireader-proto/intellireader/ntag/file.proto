@@ -1,0 +1,15 @@
+syntax = "proto2";
+
+package ntag.file;
+
+// Files within DF Level application
+enum File {
+    // The Capability Container contains defines access rights
+    CAPABILITY_CONTAINER = 0;
+
+    // Contains NDEF message
+    NDEF_MESSAGE = 1;
+
+    // Proprietary file, storage of raw data
+    PROPRIETARY = 2;
+}

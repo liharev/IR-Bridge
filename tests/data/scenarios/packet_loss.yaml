@@ -1,0 +1,15 @@
+# The mirror port loses the controller's PerformTransaction command. The response is decoded by
+# inference, but the frames after the hole arrive late: the first presentment ends NO_DECISION,
+# the module re-synchronizes and the second card is APPROVED.
+start: "2026-11-07T08:00:00.000+03:00"
+steps:
+  - { action: open, validator: 10.42.0.11 }
+  - { action: idle_poll, validator: 10.42.0.11, count: 2 }
+  - { action: drop_next_packet, validator: 10.42.0.11 }
+  - { action: bank_card, validator: 10.42.0.11, uid: "0E264417" }
+  - { action: indicate, validator: 10.42.0.11, kind: approve, via: picture }
+  - { action: wait, ms: 4000 }
+  - { action: bank_card, validator: 10.42.0.11, uid: "5F6E7D8C" }
+  - { action: indicate, validator: 10.42.0.11, kind: approve, via: picture }
+  - { action: wait, ms: 4000 }
+  - { action: close, validator: 10.42.0.11 }

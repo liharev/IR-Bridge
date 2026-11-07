@@ -1,0 +1,71 @@
+syntax = "proto2";
+
+import "gui/screen.proto";
+import "misc/buzzer.proto";
+import "pinpad/button_id.proto";
+
+package pinpad.secure_entry;
+
+// Parameters for entring secure data (e.g. PIN)
+message SecureEntry {
+    // Parameters for the dialog
+    optional DialogParams params = 1;
+
+    oneof dialog {
+        // Show the built-in secure input dialog
+        BuiltInDialog built_in = 2;
+
+        // Show a custom input screen
+        CustomDialog custom = 3;
+
+        // Use for the "Direct display" hardware configuration
+        ExternalDialog external = 4;
+    }
+}
+
+message DialogParams {
+    // Minimum allowed length of a secure data
+    optional uint32 min_length = 1 [default = 4];
+
+    // Maximum allowed length of a secure data
+    optional uint32 max_length = 2 [default = 4];
+
+    // Timeout for entry in seconds
+    optional uint32 timeout = 3 [default = 30];
+
+    // Automatically accept the entered data if the length is equal to max_length
+    optional bool auto_accept = 4 [default = false];
+}
+
+message BuiltInDialog {
+    // Caption of the screen
+    required string caption = 1;
+}
+
+message CustomDialog {
+    // Command to draw custom input screen
+    required gui.screen.ShowScreen screen = 1;
+
+    // Beep on key press
+    optional misc.buzzer.Note beep_on_key = 2;
+}
+
+message ExternalDialog {
+    // List of buttons displayed on the screen
+    repeated Button buttons = 1;
+
+    // Beep on key press
+    optional misc.buzzer.Note beep_on_key = 2;
+}
+
+message Button {
+    required pinpad.button_id.ButtonId button_id = 1;
+    required Position position = 2;
+}
+
+message Position {
+    required uint32 x = 1;
+    required uint32 y = 2;
+    required uint32 width = 3;
+    required uint32 height = 4;
+}

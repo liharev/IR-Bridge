@@ -1,0 +1,11 @@
+syntax = "proto2";
+
+package mifare.av2.channel;
+
+// NXP Mifare SAM AV2 Logical Channel
+enum Channel {
+    AV2_CHANNEL_0 = 0;
+    AV2_CHANNEL_1 = 1;
+    AV2_CHANNEL_2 = 2;
+    AV2_CHANNEL_3 = 3;
+}

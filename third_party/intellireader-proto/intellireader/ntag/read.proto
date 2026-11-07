@@ -1,0 +1,21 @@
+syntax = "proto2";
+
+import "ntag/file.proto";
+import "ntag/comm.proto";
+
+package ntag.read;
+
+// Read a file and return its content
+message ReadFile {
+    // File to be read
+    required ntag.file.File file = 1;
+
+    // Protection used during transmission
+    optional ntag.comm.Protection protection = 2 [default = ENCRYPTED_WITH_MAC];
+}
+
+// File content
+message FileContent {
+    // Raw data
+    required bytes data = 1;
+}

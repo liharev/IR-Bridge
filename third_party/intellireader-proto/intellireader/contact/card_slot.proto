@@ -1,0 +1,38 @@
+syntax = "proto2";
+
+package contact.card_slot;
+
+enum CardSlot {
+    // Main slot for banking cards
+    MAIN_SLOT = 0;
+
+    // Slot for SAM module
+    SAM1_SLOT = 1;
+
+    // Slot for SAM module
+    SAM2_SLOT = 2;
+
+    // Slot for SAM module
+    SAM3_SLOT = 3;
+
+    // Slot for SAM module
+    SAM4_SLOT = 4;
+
+    // Slot for SAM module
+    SAM5_SLOT = 5;
+
+    // Slot for SAM module
+    SAM6_SLOT = 6;
+
+    // Slot for SAM module
+    SAM7_SLOT = 7;
+
+    // Slot for SAM module
+    SAM8_SLOT = 8;
+
+    // Slot for SAM module
+    SAM9_SLOT = 9;
+
+    // Slot for SAM module
+    SAM10_SLOT = 10;
+}

@@ -1,0 +1,11 @@
+syntax = "proto2";
+
+package contactless.rf_field;
+
+// Power OFF RF field of the reader
+message PowerOffField {
+    // Whether to deselect the card before field is powered off
+    optional bool deselect = 1 [default = false];
+}
+
+// No data carried with successful response

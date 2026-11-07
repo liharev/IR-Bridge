@@ -1,0 +1,19 @@
+syntax = "proto2";
+
+package cipurse.sam;
+
+import "contact/card_slot.proto";
+
+// Unlock CIPURSE HW SAM in the reader
+message AuthorizeHwSam {
+    // Card slot in the reader
+    required contact.card_slot.CardSlot slot = 1;
+
+    // CIPURSE SAM Application ID (ADF name)
+    required bytes aid = 2;
+
+    // SAM password (use default if absent)
+    optional bytes password = 3;
+}
+
+// No data carried with successful response

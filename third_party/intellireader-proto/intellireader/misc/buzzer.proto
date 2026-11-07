@@ -1,0 +1,23 @@
+syntax = "proto2";
+
+package misc.buzzer;
+
+// Produce some sound(s) by the buzzer
+message MakeSound {
+    // Melody consists of the notes
+    repeated Note melody = 1;
+}
+
+// The note
+message Note {
+    // Frequency of the note in Hertz
+    required uint32 frequency_hz = 1;
+
+    // Duration of the note in milliseconds
+    required uint32 duration_ms = 2;
+
+    // Optional period of silence after the note
+    optional uint32 silence_duration_ms = 3;
+}
+
+// No data carried with successful response

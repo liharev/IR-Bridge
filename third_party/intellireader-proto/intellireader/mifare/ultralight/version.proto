@@ -1,0 +1,13 @@
+syntax = "proto2";
+
+package mifare.ultralight.version;
+
+// Run Mifare Ultralight EV1 'GET_VERSION' command
+message GetVersion {
+}
+
+// Response to Mifare Ultralight EV1 'GET_VERSION' command
+message Version {
+    // Response to the 'GET_VERSION' command as is
+    required bytes raw_version_data = 1;
+}

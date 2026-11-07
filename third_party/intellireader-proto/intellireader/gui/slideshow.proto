@@ -1,0 +1,27 @@
+syntax = "proto2";
+
+import "gui/alignment.proto";
+import "gui/background.proto";
+
+package gui.slideshow;
+
+// Show pictures as slideshow
+message Slideshow {
+    // The customer picture name to show
+    required string name = 1;
+
+    // Border background
+    required gui.background.Background background = 2;
+
+    // How many frames are within picture
+    required uint32 frames_count = 3;
+
+    // Delay in milliseconds between frames
+    optional uint32 delay_ms = 4 [default = 0];
+
+    // How to vertically align the picture
+    optional gui.alignment.VerticalAlignment vertical_alignment = 5 [default = CENTER_VERTICALLY];
+
+    // How to horizontally align the picture
+    optional gui.alignment.HorizontalAlignment horizontal_alignment = 6 [default = CENTER_HORIZONTALLY];
+}

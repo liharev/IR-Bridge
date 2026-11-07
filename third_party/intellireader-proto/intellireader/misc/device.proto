@@ -1,0 +1,25 @@
+syntax = "proto2";
+
+package misc.device;
+
+// Requests reader to return non-volatile information about itself
+message ReadDeviceInfo {
+}
+
+// Current device specific information
+message DeviceInfo {
+    // Serial Number of the device
+    required string serial_number = 1;
+
+    // Version of IntelliReader software
+    required string intellireader_version = 2;
+
+    // Proprietary ID of the hardware model
+    optional uint32 hardware_model_id = 3;
+
+    // Proprietary hardware description
+    optional string hardware_description = 4;
+
+    // External IntelliReader device information
+    optional DeviceInfo external_device_info = 5;
+}

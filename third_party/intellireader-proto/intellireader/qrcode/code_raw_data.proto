@@ -1,0 +1,7 @@
+syntax = "proto2";
+
+package qrcode.code_raw_data;
+
+message RawData {
+    required bytes data = 1;
+}

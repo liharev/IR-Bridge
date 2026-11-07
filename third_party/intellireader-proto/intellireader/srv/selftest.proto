@@ -1,0 +1,52 @@
+syntax = "proto2";
+
+package srv.selftest;
+
+// Request to run self-test
+message RunSelfTest {
+}
+
+// Response to the self-test request
+message SelfTestResult {
+    // Device's hardware status
+    required Hardware hardware = 1;
+}
+
+message Hardware {
+    // The NFC hardware
+    required HwComponent nfc = 1;
+
+    // Secure Authentication Module (SAM) hardware
+    required HwComponent sam = 2;
+
+    // The display (LCD)
+    required HwComponent display = 3;
+
+    // The touchscreen of the display
+    required HwComponent touchscreen = 4;
+
+    // QR (barcode) scanner
+    required HwComponent qr_scanner = 5;
+
+    // Dry contacts (turnstile control lines) hardware
+    required HwComponent dry_contacts = 6;
+}
+
+message HwComponent {
+    // Hardware component status
+    required HwComponentStatus status = 1;
+
+    // Additional information for this hardware component
+    optional string info = 2;
+}
+
+enum HwComponentStatus {
+    // Hardware component works normally, `info` field may contain HW module version
+    HW_COMPONENT_OK = 0;
+
+    // Hardware component is broken, `info` field may contain additional information
+    HW_COMPONENT_BROKEN = 1;
+
+    // Hardware component is absent
+    HW_COMPONENT_ABSENT = 2;
+}

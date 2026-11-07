@@ -1,0 +1,21 @@
+syntax = "proto2";
+
+package gui.solidfill;
+
+// Most used colors
+enum SolidFill {
+    // RGB [0, 0, 0]
+    SOLID_FILL_BLACK = 0;
+
+    // RGB [1, 1, 1]
+    SOLID_FILL_WHITE = 1;
+
+    // RGB [1, 0, 0]
+    SOLID_FILL_RED = 2;
+
+    // RGB [0, 1, 0]
+    SOLID_FILL_GREEN = 3;
+
+    // RGB [0, 0, 1]
+    SOLID_FILL_BLUE = 4;
+}

@@ -1,0 +1,26 @@
+syntax = "proto2";
+
+package misc.leds;
+
+// Defines which LED (blue, yellow, etc..) in what state (ON/OFF) will be switched to
+message Leds {
+    // The Blue LED on the front panel
+    optional bool blue = 1;
+
+    // The Yellow LED on the front panel
+    optional bool yellow = 2;
+
+    // The Green LED on the front panel
+    optional bool green = 3;
+
+    // The Red LED on the front panel
+    optional bool red = 4;
+
+    // The Backlight of the LCD
+    optional bool lcd_backlight = 5;
+
+    // The EMV symbol on the front panel
+    optional bool emv_symbol = 6;
+}
+
+// No data carried with successful response

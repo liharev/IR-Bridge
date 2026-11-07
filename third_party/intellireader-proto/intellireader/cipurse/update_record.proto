@@ -1,0 +1,20 @@
+syntax = "proto2";
+
+package cipurse.update_record;
+
+// Update the content of the linear record(s)
+message UpdateRecord {
+    // Short File ID
+    required uint32 short_file_id = 1;
+
+    // Data to be update
+    required bytes data = 2;
+
+    // Number of the first record (in the range of 1 to 254)
+    optional uint32 first_record = 3 [default = 1];
+
+    // Update multiple records at once
+    optional bool update_multiple_records = 4 [default = false];
+}
+
+// No data carried with successful response

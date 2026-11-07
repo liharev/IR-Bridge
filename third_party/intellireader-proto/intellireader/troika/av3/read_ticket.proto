@@ -1,0 +1,27 @@
+syntax = "proto2";
+
+import "mifare/classic/auth.proto";
+
+import "troika/av3/date.proto";
+import "troika/av3/time.proto";
+
+package troika.av3.read_ticket;
+
+message ReadTicket {
+    // Current date
+    required troika.av3.date.Date date = 1;
+
+    // Current time
+    required troika.av3.time.Time time = 2;
+
+    // Sectors to looking for ticket
+    repeated mifare.classic.auth.SamKey sectors = 3;
+}
+
+message Ticket {
+    // Number of Mifare Classic sector
+    required uint32 sector_number = 1;
+
+    // Packed logical ticket (Troika proprietary format)
+    required bytes ticket_data = 2;
+}

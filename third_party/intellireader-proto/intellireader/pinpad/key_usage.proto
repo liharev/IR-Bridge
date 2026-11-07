@@ -1,0 +1,48 @@
+syntax = "proto2";
+
+package pinpad.key_usage;
+
+// Key usage
+enum Usage {
+    // Unknown usage
+    UNKNOWN_USAGE = 0;
+
+    // To encrypt other key
+    KEY_ENCRYPTION = 1;
+
+    // For arbitrary data encryption/decryption
+    DATA_ENCRYPTION = 2;
+
+    // For PIN encryption only
+    PIN_ENCRYPTION = 3;
+
+    // For PICC (contactless card) authentication
+    PICC_AUTHENTICATION = 4;
+
+    // To diversify PICC (contactless card) authentication key
+    PICC_KEY_DIVERSIFICATION = 5;
+
+    // To compute HMAC hash
+    HMAC_COMPUTATION = 6;
+
+    // To hash card's PAN
+    PAN_HASHING = 7;
+
+    // To generate message authentication code (MAC) by CMAC algorithm (ISO 9797-1:2011 Algorithm 5)
+    CMAC_GENERATION = 8;
+
+    // To generate message authentication code (MAC) in accordance with ISO 9797-1:2011 Algorithm 1
+    MAC_GENERATION_ALGO_1 = 9;
+
+    // To generate message authentication code (MAC) in accordance with ISO 9797-1:2011 Algorithm 2
+    MAC_GENERATION_ALGO_2 = 10;
+
+    // To generate message authentication code (MAC) in accordance with ISO 9797-1:2011 Algorithm 3
+    MAC_GENERATION_ALGO_3 = 11;
+
+    // To generate message authentication code (MAC) in accordance with ISO 9797-1:2011 Algorithm 4
+    MAC_GENERATION_ALGO_4 = 12;
+
+    // To generate message authentication code (MAC) in accordance with ISO 9797-1:2011 Algorithm 6
+    MAC_GENERATION_ALGO_6 = 13;
+}

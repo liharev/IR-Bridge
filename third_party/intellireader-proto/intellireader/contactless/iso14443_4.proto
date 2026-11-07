@@ -1,0 +1,15 @@
+syntax = "proto2";
+
+package contactless.iso14443_4;
+
+// ISO14443-4A/B request from reader to card
+message Command {
+    // ISO14443-4 INF payload
+    required bytes data = 1;
+}
+
+// ISO14443-4A/B response from card to reader
+message Response {
+    // ISO14443-4 INF payload
+    required bytes data = 1;
+}

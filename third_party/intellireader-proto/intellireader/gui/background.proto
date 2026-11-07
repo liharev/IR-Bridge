@@ -1,0 +1,18 @@
+syntax = "proto2";
+
+package gui.background;
+
+import "gui/solidfill.proto";
+
+// Background color of the widget
+message Background {
+    oneof background {
+        // Solid fill by predefined color
+        gui.solidfill.SolidFill solid_fill = 1;
+
+        // Solid fill by any color
+        // RGB color has 24 bits format: RED[23:16] GREEN[15:8] BLUE[7:0] 
+        uint32 solid_fill_rgb = 2;
+    }
+}
+

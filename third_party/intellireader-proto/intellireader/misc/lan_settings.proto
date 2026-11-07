@@ -1,0 +1,32 @@
+syntax = "proto2";
+
+package misc.lan_settings;
+
+message ChangeLanSettings {
+    // New LAN settings
+    required LanSettings lan_settings = 1;
+}
+
+message LanSettings {
+    oneof ipv4_method {
+        // Use DHCP to retrieve LAN settings
+        Dhcp dhcp = 1;
+
+        // Use manually prepared LAN settings
+        ManualSettings manual = 2;
+    }
+}
+
+message Dhcp {
+}
+
+message ManualSettings {
+    // IP-address of the reader
+    required string local_address = 1;
+
+    // Network mask
+    required string netmask = 2;
+
+    // Default gateway
+    required string gateway = 3;
+}

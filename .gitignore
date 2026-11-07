@@ -1,0 +1,12 @@
+/build*/
+/out/
+*.pcap
+!tests/data/**/*.pcap
+*.db
+*.db-wal
+*.db-shm
+crash-*
+leak-*
+timeout-*
+.cache/
+compile_commands.json

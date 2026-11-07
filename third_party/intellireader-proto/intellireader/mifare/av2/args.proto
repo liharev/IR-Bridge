@@ -1,0 +1,21 @@
+syntax = "proto2";
+
+import "contact/card_slot.proto";
+import "mifare/av2/channel.proto";
+
+package mifare.av2.args;
+
+// Parameters used in authentication
+message AuthenticationArguments {
+    // Card slot in the reader
+    required contact.card_slot.CardSlot slot = 1;
+
+    // Number of the key within SAM AV2
+    required uint32 key_number = 2;
+
+    // Version of the key within SAM AV2
+    optional uint32 key_version = 3 [default = 0];
+
+    // Number of SAM AV2 Logical Channel
+    optional mifare.av2.channel.Channel channel = 4 [default = AV2_CHANNEL_0];
+}

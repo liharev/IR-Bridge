@@ -1,0 +1,56 @@
+syntax = "proto2";
+
+package misc.rgb_leds;
+
+message SetAllLeds {
+    // Color format: RED[23:16] GREEN[15:8] BLUE[7:0]
+    required uint32 color = 1;
+}
+
+// No data carried with successful response to SetAllLeds
+
+message SetLeds {
+    // List of the LEDs and their colors
+    repeated Led leds = 1;
+}
+
+// No data carried with successful response to SetEachLed
+
+message SetLedsByMask {
+    // Each bit is set to 1 defines the number of LED
+    // that uses color data from the `colors` field
+    required uint64 leds_mask = 1;
+
+    // Colors of LEDs that set to 1 in the mask.
+    // Color format: RED[23:16] GREEN[15:8] BLUE[7:0]
+    repeated uint32 colors = 2 [packed = true];
+}
+
+// No data carried with successful response to SetLedsByMask
+
+message GetLedsInfo {
+}
+
+message LedsInfo {
+    // Number of RGB LEDs
+    required uint32 leds_count = 1;
+}
+
+message Led {
+    // Number of the LED starting from 0
+    required uint32 number = 1;
+
+    // Color format: RED[23:16] GREEN[15:8] BLUE[7:0]
+    required uint32 color = 2;
+}
+
+message SetLedsBrightness {
+    // Max brightness of the red component in percentage (0-100)
+    required uint32 red = 1;
+
+    // Max brightness of the green component in percentage (0-100)
+    required uint32 green = 2;
+
+    // Max brightness of the blue component in percentage (0-100)
+    required uint32 blue = 3;
+}

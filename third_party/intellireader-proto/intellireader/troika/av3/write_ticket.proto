@@ -1,0 +1,24 @@
+syntax = "proto2";
+
+import "mifare/classic/auth.proto";
+
+package troika.av3.write_ticket;
+
+message WriteTicket {
+    // Sector where ticket should be written
+    required mifare.classic.auth.SamKey sector = 1;
+
+    // Ticket parameters (Troika proprietary format)
+    required bytes ticket_params = 2;
+
+    // Validate parameters (Troika proprietary format)
+    required bytes validate_params = 3;
+}
+
+message WriteResult {
+    // Sector bitmap (48 bytes)
+    required bytes sector_bitmap = 1;
+
+    // Whether the sector bitmap is successfully written on the card
+    required bool write_ok = 2;
+}

@@ -1,0 +1,12 @@
+syntax = "proto2";
+
+package touchscreen.coordinates;
+
+// Coordinates on the touchscreen
+message Coordinates {
+    // X coordinate
+    required uint32 x = 1;
+
+    // Y coordinate
+    required uint32 y = 2;
+}

@@ -1,0 +1,15 @@
+syntax = "proto2";
+
+package mifare.plus.counter.get;
+
+// Reads counter out from memory block
+message GetCounter {
+    // Source block _within_ sector
+    required uint32 src_block = 1;
+}
+
+// Counter from memory block
+message Counter {
+    // Value of counter
+    required int32 value = 1;
+}

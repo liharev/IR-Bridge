@@ -1,0 +1,26 @@
+syntax = "proto2";
+
+import "contact/card_slot.proto";
+import "cipurse/security_level.proto";
+
+package cipurse.auth;
+
+// Establish secure channel between CIPURSE card and the reader
+message EstablishSecureChannel {
+    // Number of key in the current file
+    required uint32 key_number = 1;
+
+    // Either master key for key diversification or direct key if no key diversification
+    required uint32 sam_key_id = 2;
+
+    // Diversification data (leave empty to use most recent div. data)
+    optional bytes diversification_data = 3;
+
+    // Card slot in the reader with CIPURSE SAM (use last authorized if absent)
+    optional contact.card_slot.CardSlot slot = 4;
+
+    // Communication security level for transferring data between PCD and PICC
+    optional cipurse.security_level.SecurityLevel security_level = 5 [default = ENCRYPTED];
+}
+
+// No data carried with successful response

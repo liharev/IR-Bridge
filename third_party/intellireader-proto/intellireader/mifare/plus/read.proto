@@ -1,0 +1,18 @@
+syntax = "proto2";
+
+package mifare.plus.read;
+
+// Defines which block(s) to be read
+message ReadBlocks {
+    // Number of the first block _within_ sector
+    required uint32 start_block = 1;
+
+    // Count of blocks to be read (up to 16)
+    optional uint32 block_count = 2 [default = 1];
+}
+
+// Block(s) data contained if more than one blocks to be read
+message Blocks {
+    // Block(s) data
+    required bytes data = 1;
+}

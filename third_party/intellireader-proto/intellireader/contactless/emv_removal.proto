@@ -1,0 +1,14 @@
+syntax = "proto2";
+
+package contactless.emv_removal;
+
+// Request reader to perform EMVCo Contactless Removal procedure
+message EmvRemoval {
+    // Timeout of token to be absent (no timeout = forever)
+    optional uint32 timeout = 1;
+
+    // Whether to deselect the card before starting the procedure
+    optional bool deselect = 2 [default = false];
+}
+
+// No data carried with successful response

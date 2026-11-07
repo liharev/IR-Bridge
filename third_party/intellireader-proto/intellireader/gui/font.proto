@@ -1,0 +1,15 @@
+syntax = "proto2";
+
+package gui.font;
+
+// Font for text rendering
+enum Font {
+    // Regular font for normal text, height 30 pixels
+    REGULAR_FONT = 0;
+
+    // Large font for important text, height 56 pixels
+    LARGE_FONT = 1;
+
+    // Monospace font, all symbols have the same WxH: 15x29
+    MONOSPACE_FONT = 2;
+}

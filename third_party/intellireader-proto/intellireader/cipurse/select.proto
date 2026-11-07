@@ -1,0 +1,16 @@
+syntax = "proto2";
+
+package cipurse.select;
+
+// Select file on the CIPURSE card
+message SelectFile {
+    oneof select_by {
+        // Application ID
+        bytes aid = 1;
+
+        // File ID
+        uint32 file_id = 2;
+    }
+}
+
+// No data carried with successful response

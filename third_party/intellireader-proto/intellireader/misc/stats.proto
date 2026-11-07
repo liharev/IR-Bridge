@@ -1,0 +1,27 @@
+syntax = "proto2";
+
+package misc.stats;
+
+import "misc/lwip.proto";
+import "misc/event.proto";
+import "misc/ethernet.proto";
+import "misc/smartcard.proto";
+
+// Requests reader to return device's collected statistic
+message GetDeviceStatistic {
+}
+
+// Various statistic collected by the reader
+message DeviceStatistic {
+    // lwIP TCP/IP stack statistic
+    optional misc.lwip.Statistic lwip = 1;
+
+    // List of an events recorded by the reader in the internal ring buffer
+    repeated misc.event.Event events = 2;
+
+    // Built-in ethernet switch statistic
+    optional misc.ethernet.Statistic ethernet = 3;
+
+    // Smartcard statistic
+    optional misc.smartcard.Statistic smartcard = 4;
+}

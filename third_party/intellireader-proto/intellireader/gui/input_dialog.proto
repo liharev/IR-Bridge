@@ -1,0 +1,61 @@
+syntax = "proto2";
+
+package gui.input_dialog;
+
+// Shows the input screen and interacts with user to enter text
+message InputDialog {
+    // Caption of the screen
+    required string caption = 1;
+
+    // Placeholder for text to be entered
+    optional string placeholder = 2;
+
+    // Inactivity timeout in seconds
+    optional uint32 timeout = 3;
+
+    // Minimal text length allowed to confirmed
+    optional uint32 min_text_length = 4 [default = 0];
+
+    // Maximum text length allowed to enter
+    optional uint32 max_text_length = 5 [default = 1024];
+
+    // Sequence of the layouts available for user.
+    // Default sequence: en -> EN -> 123 -> %;{} -> ru -> RU
+    repeated KeypadLayout layouts = 6 [packed = true];
+
+    // Hide input text with '*' characters
+    optional bool hide_input = 7 [default = false];
+
+    // Use large font for the input text
+    optional bool large_font = 8 [default = false];
+}
+
+// Input is confirmed by the 'OK' button
+message EnteredText {
+    // Text entered by user
+    required string text = 1;
+}
+
+// Defines keyset on the input screen
+enum KeypadLayout {
+    // Decimal digits and some special characters
+    DECIMAL_DIGITS = 0;
+
+    // Special characters
+    SPECIAL_CHARS = 1;
+
+    // English letters in lower case
+    ENGLISH_LOWER = 2;
+
+    // English letters in upper case
+    ENGLISH_UPPER = 3;
+
+    // Russian letters in lower case
+    RUSSIAN_LOWER = 4;
+
+    // Russian letters in upper case
+    RUSSIAN_UPPER = 5;
+
+    // PINPAD layout
+    PINPAD = 6;
+}

@@ -1,0 +1,67 @@
+syntax = "proto2";
+
+import "mifare/plus/auth.proto";
+import "mifare/plus/read.proto";
+import "mifare/plus/write.proto";
+
+import "mifare/plus/counter/commit.proto";
+import "mifare/plus/counter/copy.proto";
+import "mifare/plus/counter/get.proto";
+import "mifare/plus/counter/modify.proto";
+import "mifare/plus/counter/set.proto";
+
+package mifare.plus.bulk;
+
+message Command {
+    oneof MfrCmd {
+        // Authenticates to Mifare Plus card using clear key
+        mifare.plus.auth.ClearKey auth_on_clear_key = 1;
+
+        // Read blocks from Mifare Plus card
+        mifare.plus.read.ReadBlocks read_blocks = 2;
+
+        // Write blocks to Mifare Plus card
+        mifare.plus.write.WriteBlocks write_blocks = 3;
+
+        // Gets Mifare Plus counter block value
+        mifare.plus.counter.get.GetCounter get_counter = 4;
+
+        // Sets Mifare Plus counter block value
+        mifare.plus.counter.set.SetCounter set_counter = 5;
+
+        // Modifies Mifare Plus counter block
+        mifare.plus.counter.modify.ModifyCounter modify_counter = 6;
+
+        // Copies value of Mifare Plus counter from one block to another
+        mifare.plus.counter.copy.CopyCounter copy_counter = 7;
+
+        // Commits (writes) value from the internal data register to the block
+        mifare.plus.counter.commit.CommitCounter commit_counter = 8;
+
+        // Authenticates to Mifare Plus card using key in SAM AV2
+        mifare.plus.auth.SamKey auth_on_sam_key = 9;
+
+        // Authenticates to Mifare Plus card using key from internal secure storage
+        mifare.plus.auth.InternalKey auth_on_internal_key = 10;
+    }
+}
+
+message CommandResult {
+    oneof MfrResult {
+        // Response to ReadBlocks command
+        mifare.plus.read.Blocks read_blocks = 1;
+
+        // Response to GetCounter command
+        mifare.plus.counter.get.Counter get_counter = 2;
+    }
+}
+
+message BulkOperation {
+    // Sequence of the Mifare Plus commands
+    repeated Command operations = 1;
+}
+
+message BulkResult {
+    // Sequence of the results of Mifare Plus commands
+    repeated CommandResult results = 1;
+}

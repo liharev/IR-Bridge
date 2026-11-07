@@ -1,0 +1,54 @@
+syntax = "proto2";
+
+package misc.lwip;
+
+// Network stack
+message Statistic {
+    // Link level
+    required ProtocolStats link = 1;
+
+    // Address Resolution Protocol (ARP) level
+    required ProtocolStats arp = 2;
+
+    // Internet Protocol (IP) level
+    required ProtocolStats ip = 3;
+
+    // Transmission Control Protocol (TCP) level
+    required ProtocolStats tcp = 4;
+}
+
+// Protocol statistic
+message ProtocolStats {
+    // Transmitted packets
+    required uint32 xmit = 1;
+
+    // Received packets
+    required uint32 recv = 2;
+
+    // Forwarded packets
+    required uint32 fw = 3;
+
+    // Dropped packets
+    required uint32 drop = 4;
+
+    // Checksum error
+    required uint32 chkerr = 5;
+
+    // Invalid length error
+    required uint32 lenerr = 6;
+
+    // Out of memory error
+    required uint32 memerr = 7;
+
+    // Routing error
+    required uint32 rterr = 8;
+
+    // Protocol error
+    required uint32 proterr = 9;
+
+    // Error in options
+    required uint32 opterr = 10;
+
+    // Misc error
+    required uint32 err = 11;
+}

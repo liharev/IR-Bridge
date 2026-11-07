@@ -1,0 +1,21 @@
+syntax = "proto2";
+
+package cipurse.modify_value;
+
+// Increment or decrement the value of the record-value
+message ModifyValue {
+    // Short File ID
+    required uint32 short_file_id = 1;
+
+    // Modification operand.
+    // If value is positive then increment otherwise decrement original value
+    required sint32 operand = 2;
+
+    // Number of the record (in the range of 1 to 254)
+    optional uint32 record = 3 [default = 1];
+}
+
+// New value of the record-value
+message NewValue {
+    required sint32 value = 1;
+}

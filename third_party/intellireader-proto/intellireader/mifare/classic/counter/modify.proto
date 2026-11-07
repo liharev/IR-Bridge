@@ -1,0 +1,19 @@
+syntax = "proto2";
+
+package mifare.classic.counter.modify;
+
+// Increment or decrement the contents of a block
+message ModifyCounter {
+    // Source block _within_ sector
+    required uint32 src_block = 1;
+
+    // Modification operand
+    // If value is positive then increment otherwise decrement original value
+    required int32 operand = 2;
+
+    // Destination block _within_ sector
+    // If absent, store the result in the internal data register
+    optional uint32 dst_block = 3;
+}
+
+// No data carried with successful response

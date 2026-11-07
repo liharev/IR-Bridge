@@ -1,0 +1,36 @@
+syntax = "proto2";
+
+package qrcode.emv_qr_code;
+
+// Validation of QR Code data result
+message ValidationResult {
+    // Status of validation
+    required ValidationStatus status = 1;
+
+    // EMV tags from QR Code data
+    repeated EmvTag emv_tags = 2;
+
+    // Describes reason due to validation is failed
+    optional string error_reason = 3;
+
+    // Raw QR Code data (present if validation failed)
+    optional bytes raw_qr_code_data = 4;
+}
+
+// Status of validation
+enum ValidationStatus {
+    // Online authorization is required to finish transaction
+    ONLINE_AUTHORIZATION_REQUIRED = 0;
+
+    // Validation of QR Code data is failed, see error_reason field
+    VALIDATION_FAILED = 1;
+}
+
+// Represents EMVCo Tag
+message EmvTag {
+    // Number of tag
+    required uint32 number = 1;
+
+    // Value of tag
+    required bytes value = 2;
+}

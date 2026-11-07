@@ -1,0 +1,15 @@
+syntax = "proto2";
+
+package ntag.comm;
+
+// Defines protection used for data transmission between reader and token
+enum Protection {
+    // Full protection for integrity, authenticity and confidentiality
+    ENCRYPTED_WITH_MAC = 0;
+
+    // MAC protection for integrity and authenticity
+    PLAINTEXT_WITH_MAC = 1;
+
+    // No protection: message is transmitted in plain text
+    PLAINTEXT = 2;
+}

@@ -1,0 +1,21 @@
+# Configuration used by the scenario tests (irbridge-pcaptool replay --test-secret).
+vehicle_id: "TEST-BUS"
+capture: { mode: mirror, interface: eth1, ir_ports: [42616], tls_ports: [42800] }
+validators:
+  - { ip: 10.42.0.11, validator_id: "V1", door_id: "D1" }
+  - { ip: 10.42.0.12, validator_id: "V2", door_id: "D2" }
+detector:
+  success_policy: indication
+  decision_window_ms: 3000
+  same_carrier_merge_ms: 1500
+  require_ack: true
+  approve:
+    - { type: gui_picture, ids: [APPROVED, APPROVED_DISCOUNT] }
+    - { type: gui_text, regex: "оплачено(?: x([0-9]+))?", icase: true }
+    - { type: leds, green: true }
+    - { type: turnstile_pass }
+  reject:
+    - { type: gui_picture, ids: [REJECTED] }
+    - { type: leds, red: true }
+mqtt: { enabled: false }
+storage: { db_path: /tmp/irbridge-test.db }

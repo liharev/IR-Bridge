@@ -1,0 +1,9 @@
+syntax = "proto2";
+
+package mifare.ultralight.counter.number;
+
+enum CounterNumber {
+    FIRST = 0;
+    SECOND = 1;
+    THIRD = 2;
+}

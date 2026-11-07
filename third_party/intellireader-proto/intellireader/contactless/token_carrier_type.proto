@@ -1,0 +1,39 @@
+syntax = "proto2";
+
+package contactless.token_carrier_type;
+
+// Type of token carrier
+enum TokenCarrierType {
+    // Reader unable to determinate token carrier type
+    UNKNOWN = 0;
+
+    // Standard plastic card
+    PLASTIC_CARD = 1;
+
+    // Mobile device with unknown wallet
+    MOBILE_DEVICE = 2;
+
+    // Goolge Pay wallet
+    GOOGLE_PAY = 3;
+
+    // Apple Pay wallet
+    APPLE_PAY = 4;
+
+    // Samsung Pay wallet
+    SAMSUNG_PAY = 5;
+
+    // MIR Pay wallet
+    MIR_PAY = 6;
+
+    // Huawei Pay wallet
+    HUAWEI_PAY = 7;
+
+    // Sber Pay wallet
+    SBER_PAY = 8;
+
+    // TBank Pay wallet
+    TBANK_PAY = 9;
+
+    // Gazprom Pay wallet
+    GAZPROM_PAY = 10;
+}

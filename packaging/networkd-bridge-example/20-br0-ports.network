@@ -1,0 +1,7 @@
+# eth0 (controller side) and eth1 (validator side) become bridge ports without addresses.
+[Match]
+Name=eth0 eth1
+
+[Network]
+Bridge=br0
+LinkLocalAddressing=no

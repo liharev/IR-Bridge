@@ -1,0 +1,16 @@
+syntax = "proto2";
+
+import "mifare/ultralight/counter/number.proto";
+
+package mifare.ultralight.counter.increment;
+
+// Increment Mifare Ultralight EV1 built-in counter
+message IncrementCounter {
+    // Counter number
+    required mifare.ultralight.counter.number.CounterNumber counter_number = 1;
+
+    // Increment value
+    required uint32 operand = 2;
+}
+
+// No data carried with successful response

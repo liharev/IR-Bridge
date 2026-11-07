@@ -1,0 +1,67 @@
+syntax = "proto2";
+
+import "mifare/av2/args.proto";
+
+package mifare.classic.auth;
+
+// Type of Mifare Classic key
+enum KeyType {
+    // The A key
+    TYPE_A = 0;
+
+    // The B key
+    TYPE_B = 1;
+}
+
+// Authenticates to Mifare Classic sector using clear key
+message ClearKey {
+    // Number of Mifare Classic sector
+    required uint32 sector_number = 1;
+
+    // Specifies which type of key to use for authentication
+    required KeyType key_type = 2;
+
+    // Value of the Key (6 bytes)
+    required bytes clear_key = 3;
+}
+
+// Authenticates to Mifare Classic sector using NXP SAM AV2 module
+message SamKey {
+    // Number of Mifare Classic sector
+    required uint32 sector_number = 1;
+
+    // Specifies which type of key to use for authentication
+    required KeyType key_type = 2;
+
+    // Specifies SAM AV2 arguments that will be used in authentication
+    required mifare.av2.args.AuthenticationArguments av2_args = 3;
+
+    // Defines whether Crypto1 key diversification is required
+    optional bool need_diversification = 4 [default = false];
+}
+
+// Authenticates to Mifare Classic sector using key from internal secure storage
+message InternalKey {
+    // Number of Mifare Classic sector
+    required uint32 sector_number = 1;
+
+    // Specifies which type of key to use for authentication
+    required KeyType key_type = 2;
+
+    // Index of Mifare Classic key within internal storage
+    required uint32 key_index = 3;
+
+    // Defines whether Crypto1 key diversification is required
+    oneof diversification {
+        // Diversification method that uses Triple-DES key
+        // (the same algorithm as used in SAM AV2 diversification)
+        TripleDESDiversification samav2 = 4;
+    }
+}
+
+message TripleDESDiversification {
+    // Index of Triple-DES key within internal storage
+    required uint32 key_index = 1;
+}
+
+// No data carried with successful response

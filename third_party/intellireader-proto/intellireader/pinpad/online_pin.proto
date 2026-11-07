@@ -1,0 +1,44 @@
+syntax = "proto2";
+
+import "pinpad/secure_entry.proto";
+import "pinpad/encryption_key.proto";
+
+package pinpad.online_pin;
+
+// Request cardholder to enter PIN and prepare PIN-block for Online request
+message EnterOnlinePin {
+    // Primary Account Number (PAN), 12-19 ASCII decimal digits only
+    optional string pan = 1;
+
+    // Parameters used for PIN entry dialog
+    optional pinpad.secure_entry.SecureEntry entry = 2;
+
+    // Encryption Key
+    required pinpad.encryption_key.EncryptionKey encryption_key = 3;
+}
+
+// Result of PIN entry
+message EntryResult {
+    // Status of PIN entry
+    required EntryStatus status = 1;
+
+    // Encrypted PIN-block (PIN ^ PAN).
+    // Present when `status` is `PIN_ENTERED`
+    optional bytes pin_block = 2;
+
+    // Key Serial Number (KSN) of DUKPT.
+    // Present when `status` is `PIN_ENTERED`
+    optional bytes ksn = 3;
+}
+
+// Status of PIN entry processing
+enum EntryStatus {
+    // Online PIN entered by cardholder, terminal successfully built PIN-block
+    PIN_ENTERED = 0;
+
+    // Cardholder has rejected PIN entry (e.g. by Cancel button)
+    PIN_ENTRY_BYPASSED = 1;
+
+    // PIN has not entered during predefined timeout
+    PIN_ENTRY_TIMEOUT = 2;
+}

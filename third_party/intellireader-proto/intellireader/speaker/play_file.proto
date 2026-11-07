@@ -1,0 +1,11 @@
+syntax = "proto2";
+
+package speaker.play_file;
+
+// Play a file on the speaker
+message PlayFile {
+    // Filename of the file to play
+    required string filename = 1;
+}
+
+// No data carried with successful response

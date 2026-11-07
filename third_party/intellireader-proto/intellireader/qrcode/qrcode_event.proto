@@ -1,0 +1,17 @@
+syntax = "proto2";
+
+package qrcode.event;
+
+import "qrcode/code_raw_data.proto";
+import "qrcode/emv_qr_code.proto";
+
+// Event occured on the QR-code reader
+message QrCodeEvent {
+    oneof event {
+        // QR-code/Barcode raw data as it has been received from scanner
+        qrcode.code_raw_data.RawData raw_data = 1;
+
+        // Result of EMV Code QR validation along with EMV tags extracted from QR Code
+        qrcode.emv_qr_code.ValidationResult validation_result = 2;
+    }
+}

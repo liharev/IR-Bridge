@@ -1,0 +1,70 @@
+syntax = "proto2";
+
+import "contact/card_slot.proto";
+import "mifare/av2/channel.proto";
+import "mifare/av2/key_position.proto";
+
+package mifare.av2.change_keyentry;
+
+message ChangeKeyEntry {
+    // Card slot in the reader
+    required contact.card_slot.CardSlot slot = 1;
+
+    // Number of SAM AV2 Logical Channel
+    optional mifare.av2.channel.Channel channel = 2 [default = AV2_CHANNEL_0];
+
+    // Number of the key entry (0-127)
+    required uint32 keyentry_number = 3;
+
+    // Version of the key within the key entry (0-127)
+    required uint32 key_version = 4;
+
+    // Position of the key within the key entry
+    optional mifare.av2.key_position.KeyPosition key_position = 5 [default = POSITION_A];
+
+    oneof key_entry {
+        // Key Entry for Mifare Classic authentication
+        MifareKeyEntry mifare = 6;
+
+        // Key Entry for Mifare Plus Authtication
+        PlusKeyEntry plus = 7;
+
+        // Key Entry for Mifare Ultralight C Authtication
+        UltralightCKeyEntry ultralight_c = 8;
+    }
+}
+
+message MifareKeyEntry {
+    // MIFARE key A
+    required MifareKey key_a = 1;
+
+    // MIFARE key B
+    required MifareKey key_b = 2;
+}
+
+message MifareKey {
+    // MIFARE standard key (6 bytes)
+    required bytes key = 1;
+
+    message DiversificationKey {
+        // Key number of the diversification key for MIFARE key
+        required uint32 number = 1;
+
+        // Key version of the diversification key for MIFARE key
+        required uint32 version = 2;
+    }
+
+    optional DiversificationKey diversification_key = 2;
+}
+
+message PlusKeyEntry {
+    // AES128 key (16 bytes)
+    required bytes key = 1;
+}
+
+message UltralightCKeyEntry {
+    // 2TDEA key (16 bytes)
+    required bytes key = 1;
+}
+
+// No data carried with successful response

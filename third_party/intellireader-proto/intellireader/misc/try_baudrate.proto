@@ -1,0 +1,22 @@
+syntax = "proto2";
+
+package misc.try_baudrate;
+
+// Temporary change baudrate of serial port (UART, RS232)
+message TryBaudrate {
+    // New baudrate value (bits per second)
+    required uint32 baudrate = 1;
+}
+
+// Confirm temporary changed baudrate to make it permanent
+message ConfirmBaudrate {
+}
+
+// Ask for possible baudrates of serial port
+message GetPossibleBaudrates {
+}
+
+message PossibleBaudrates {
+    // Possible baudrates in bits per second
+    repeated uint32 baudrates = 1 [packed = true];
+}

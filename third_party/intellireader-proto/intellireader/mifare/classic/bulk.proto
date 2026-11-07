@@ -1,0 +1,67 @@
+syntax = "proto2";
+
+import "mifare/classic/auth.proto";
+import "mifare/classic/read.proto";
+import "mifare/classic/write.proto";
+
+import "mifare/classic/counter/commit.proto";
+import "mifare/classic/counter/copy.proto";
+import "mifare/classic/counter/get.proto";
+import "mifare/classic/counter/modify.proto";
+import "mifare/classic/counter/set.proto";
+
+package mifare.classic.bulk;
+
+message Command {
+    oneof MfrCmd {
+        // Authenticates to Mifare Classic sector using clear key
+        mifare.classic.auth.ClearKey auth_on_clear_key = 1;
+
+        // Authenticates to Mifare Classic sector using NXP SAM AV2 module
+        mifare.classic.auth.SamKey auth_on_sam_key = 2;
+
+        // Read blocks from Mifare Classic card
+        mifare.classic.read.ReadBlocks read_blocks = 3;
+
+        // Write blocks to Mifare Classic card
+        mifare.classic.write.WriteBlocks write_blocks = 4;
+
+        // Gets Mifare Classic counter block value
+        mifare.classic.counter.get.GetCounter get_counter = 5;
+
+        // Sets Mifare Classic counter block value
+        mifare.classic.counter.set.SetCounter set_counter = 6;
+
+        // Modifies Mifare Classic counter block
+        mifare.classic.counter.modify.ModifyCounter modify_counter = 7;
+
+        // Copies value of Mifare Classic counter from one block to another
+        mifare.classic.counter.copy.CopyCounter copy_counter = 8;
+
+        // Commits (writes) value from the internal data register to the block
+        mifare.classic.counter.commit.CommitCounter commit_counter = 9;
+
+        // Authenticates to Mifare Classic sector using internal key
+        mifare.classic.auth.InternalKey auth_on_internal_key = 10;
+    }
+}
+
+message CommandResult {
+    oneof MfrResult {
+        // Response to ReadBlocks command
+        mifare.classic.read.Blocks read_blocks = 1;
+
+        // Response to GetCounter command
+        mifare.classic.counter.get.Counter get_counter = 2;
+    }
+}
+
+message BulkOperation {
+    // Sequence of the Mifare Classic commands
+    repeated Command operations = 1;
+}
+
+message BulkResult {
+    // Sequence of the results of Mifare Classic commands
+    repeated CommandResult results = 1;
+}

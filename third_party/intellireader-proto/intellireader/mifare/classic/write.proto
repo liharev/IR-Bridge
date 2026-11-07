@@ -1,0 +1,14 @@
+syntax = "proto2";
+
+package mifare.classic.write;
+
+// Defines data to be written into Mifare Classic Block(s)
+message WriteBlocks {
+    // Number of the first block _within_ sector (possible values 0-3)
+    required uint32 start_block = 1;
+
+    // Data to be written into Block(s)
+    required bytes data = 2;
+}
+
+// No data carried with successful response

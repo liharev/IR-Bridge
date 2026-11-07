@@ -1,0 +1,20 @@
+syntax = "proto2";
+
+package ntag.select;
+
+// Selects ISO file in NTAG token
+message SelectFile {
+    // ISO file to be selected
+    optional IsoFile file = 1 [default = APPLICATION];
+}
+
+// ISO file in NTAG token
+enum IsoFile {
+    // Application/DF Level (ISO DF Name = D2760000850101h, ISO IsoFile ID = E110h)
+    APPLICATION = 0;
+
+    // PICC/MF Level (ISO MF Name = D2760000850100h, ISO IsoFile ID = 3F00h)
+    PICC = 1;
+}
+
+// No data carried with successful response

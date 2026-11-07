@@ -1,0 +1,116 @@
+syntax = "proto2";
+
+import "pinpad/encryption_key.proto";
+
+package pinpad.mac;
+
+// Generate MAC for arbitrary data using key from internal storage
+message GenerateMac {
+    // MAC input data
+    required bytes input_data = 1;
+
+    oneof algorithm {
+        // CMAC
+        Cmac cmac = 2;
+
+        // ISO 9797-1:2011 Algorithm 1
+        MacAlgorithm1 mac_algo_1 = 3;
+
+        // ISO 9797-1:2011 Algorithm 2
+        MacAlgorithm2 mac_algo_2 = 4;
+
+        // ISO 9797-1:2011 Algorithm 3
+        MacAlgorithm3 mac_algo_3 = 5;
+
+        // ISO 9797-1:2011 Algorithm 4
+        MacAlgorithm4 mac_algo_4 = 6;
+
+        // ISO 9797-1:2011 Algorithm 6
+        MacAlgorithm6 mac_algo_6 = 7;
+    }
+}
+
+message MacOutput {
+    // MAC output data
+    required bytes output_data = 1;
+
+    // Key Serial Number (KSN) of DUKPT.
+    optional bytes ksn = 2;
+
+    // Key Serial Number (KSN) of DUKPT for the second key.
+    optional bytes second_ksn = 3;
+}
+
+message Cmac {
+    // Encryption Key
+    required pinpad.encryption_key.EncryptionKey encryption_key = 1;
+}
+
+enum MacPaddingMethod {
+    PADDING_METHOD_1 = 1;
+    PADDING_METHOD_2 = 2;
+    PADDING_METHOD_3 = 3;
+}
+
+enum MacKeyDerivationMethod {
+    // Complementing alternate substrings of four bits commencing with the first four bits (ISO 9797-1:2011)
+    XORED_WITH_F0 = 0;
+
+    // Key derivation method 1 (ISO 9797-1:2011)
+    KEY_DERIVATION_METHOD_1 = 1;
+}
+
+message MacAlgorithm1 {
+    // Encryption Key
+    required pinpad.encryption_key.EncryptionKey encryption_key = 1;
+
+    // Padding Method
+    required MacPaddingMethod padding_method = 2;
+}
+
+message MacAlgorithm2 {
+    // Encryption Key
+    required pinpad.encryption_key.EncryptionKey encryption_key = 1;
+
+    // Padding Method
+    required MacPaddingMethod padding_method = 2;
+
+    // Key Derivation Method
+    required MacKeyDerivationMethod derivation_method = 3;
+}
+
+message MacAlgorithm3 {
+    // First Encryption Key
+    required pinpad.encryption_key.EncryptionKey first_encryption_key = 1;
+
+    // Second Encryption Key
+    required pinpad.encryption_key.EncryptionKey second_encryption_key = 2;
+
+    // Padding Method
+    required MacPaddingMethod padding_method = 3;
+}
+
+message MacAlgorithm4 {
+    // First Encryption Key
+    required pinpad.encryption_key.EncryptionKey first_encryption_key = 1;
+
+    // Second Encryption Key
+    required pinpad.encryption_key.EncryptionKey second_encryption_key = 2;
+
+    // Padding Method
+    required MacPaddingMethod padding_method = 3;
+
+    // Key Derivation Method
+    required MacKeyDerivationMethod derivation_method = 4;
+}
+
+message MacAlgorithm6 {
+    // Encryption Key
+    required pinpad.encryption_key.EncryptionKey encryption_key = 1;
+
+    // Padding Method
+    required MacPaddingMethod padding_method = 2;
+
+    // Key Derivation Method
+    required MacKeyDerivationMethod derivation_method = 3;
+}

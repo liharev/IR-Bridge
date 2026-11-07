@@ -1,0 +1,11 @@
+syntax = "proto2";
+
+package srv.config;
+
+enum Region {
+    // Common area for EMV and other files
+    COMMON = 0;
+
+    // EMV only area
+    EMV = 1;
+}

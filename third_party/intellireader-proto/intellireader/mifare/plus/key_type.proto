@@ -1,0 +1,46 @@
+syntax = "proto2";
+
+import "mifare/plus/sector.proto";
+
+package mifare.plus.key_type;
+
+// Type of special key of Mifare Plus cards
+enum SpecialKey {
+    // Originality Key
+    ORIGINALITY_KEY     = 0;
+
+    // Card Master Key
+    CARD_MASTER_KEY     = 1;
+
+    // Card Configuration Key
+    CARD_CONFIG_KEY     = 2;
+
+    // Level 2 Switch Key
+    LEVEL2_SWITCH_KEY   = 3;
+
+    // Level 3 Switch Key
+    LEVEL3_SWITCH_KEY   = 4;
+
+    // SL1 Card Authentication Key
+    SL1_CARD_AUTH_KEY   = 5;
+}
+
+// Defines which type of key to use for authentication to Mifare Plus sector
+message SectorKey {
+    // Number of Mifare Plus sector
+    required uint32 sector_number = 1;
+
+    // Type of Mifare Plus sector key
+    required mifare.plus.sector.SectorKeyType sector_key_type = 2;
+}
+
+// Defines which type of key to use for authentication to Mifare Plus cards
+message KeyType {
+    oneof key_type {
+        // Key to get access to non Mifare (special) blocks
+        SpecialKey special_key = 1;
+
+        // Key to get access to regular Mifare blocks
+        SectorKey sector_key = 2;
+    }
+}

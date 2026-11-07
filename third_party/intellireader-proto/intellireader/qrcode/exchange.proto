@@ -1,0 +1,17 @@
+syntax = "proto2";
+
+package qrcode.exchange;
+
+// Send command to the scanner and waiting for the answer
+message SendCommand {
+    // Scanner command
+    required bytes command = 1;
+
+    // Timeout in milliseconds to receive scanner's answer
+    required uint32 timeout = 2;
+}
+
+message ScannerReply {
+    // Reply received from the scanner
+    required bytes reply = 1;
+}

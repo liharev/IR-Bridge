@@ -1,0 +1,14 @@
+syntax = "proto2";
+
+package mifare.ultralight.write;
+
+// Write pages to Mifare Ultralight
+message WritePages {
+    // First page address
+    required uint32 start_address = 1;
+
+    // Data to be written
+    required bytes data = 2;
+}
+
+// No data carried with successful response

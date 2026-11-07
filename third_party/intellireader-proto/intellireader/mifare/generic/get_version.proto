@@ -1,0 +1,12 @@
+syntax = "proto2";
+
+package mifare.generic.get_version;
+
+// Read Product Version Information from Mifare card
+message GetVersion {
+}
+
+message ProductVersionInfo {
+    // Product Version Information
+    required bytes info = 1;
+}

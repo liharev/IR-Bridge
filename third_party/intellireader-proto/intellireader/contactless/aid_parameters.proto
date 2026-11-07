@@ -1,0 +1,15 @@
+syntax = "proto2";
+
+package contactless.parameters;
+
+// Parameters desired for AID
+message AidSpecificParams {
+    // List of AIDs to apply these parameters
+    repeated bytes aids = 1;
+
+    // Amount, Authorized (0x9F02)
+    optional uint64 amount_authorized = 2;
+
+    // Transaction Type (0x9C)
+    optional bytes transaction_type = 3;
+}

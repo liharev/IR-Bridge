@@ -1,0 +1,27 @@
+syntax = "proto2";
+
+package gui.draw_bitmap;
+
+// Draw bitmap on the LCD
+message DrawBitmap {
+    // Compressed data to draw
+    required bytes data = 1;
+
+    // Area on the LCD where to draw data
+    optional Area area = 2;
+}
+
+// Coordinates and dimensions of the bitmap area
+message Area {
+    // X axis coordinate of the left upper edge
+    required uint32 x = 1;
+
+    // Y axis coordinate of the left upper edge
+    required uint32 y = 2;
+
+    // Width of the window
+    required uint32 width = 3;
+
+    // Height of the window
+    required uint32 height = 4;
+}

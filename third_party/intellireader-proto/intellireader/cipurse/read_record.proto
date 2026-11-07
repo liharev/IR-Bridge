@@ -1,0 +1,24 @@
+syntax = "proto2";
+
+package cipurse.read_record;
+
+// Read the content of the linear record(s)
+message ReadRecord {
+    // Short File ID
+    required uint32 short_file_id = 1;
+
+    // How many bytes read
+    required uint32 length = 2;
+
+    // Number of the first record (in the range of 1 to 254)
+    optional uint32 first_record = 3 [default = 1];
+
+    // Read multiple records at once
+    optional bool read_multiple_records = 4 [default = false];
+}
+
+message Record {
+    // Linear record(s) data
+    required bytes data = 1;
+}
+

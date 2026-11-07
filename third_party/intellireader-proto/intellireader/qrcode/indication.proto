@@ -1,0 +1,12 @@
+syntax = "proto2";
+
+package qrcode.indication;
+
+// Indication of QR-code read event
+enum Indication {
+    // One-time sound at 2700Hz for 200ms
+    ONETIME_BEEP = 0;
+
+    // Disable indication
+    NONE = 1;
+}

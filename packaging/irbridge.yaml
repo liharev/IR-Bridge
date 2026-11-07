@@ -1,0 +1,72 @@
+# CAMAI IR-Bridge configuration. Check with: irbridged --check-config --config /etc/camai/irbridge.yaml
+# After editing: systemctl reload camai-irbridge
+
+vehicle_id: "BUS-0001"            # vehicle identifier used in MQTT topics and events
+
+capture:
+  mode: mirror                    # mirror | bridge | proxy | pcap-file
+  interface: eth1                 # mirror port (mirror) or br0 (bridge)
+  ir_ports: [42616]               # plain IntelliReader protocol
+  tls_ports: [42800]              # TLS: sessions are detected but cannot be observed
+  # pcap_file: /var/lib/camai/irbridge/test.pcap   # mode pcap-file
+  # proxy:                        # mode proxy: controller connects to listen, module relays to upstream
+  #   listen:
+  #     - { listen: "0.0.0.0:42616", upstream: "10.42.0.12:42616" }
+  cpu_affinity: [0, 1, 2, 3]      # RK3588: Cortex-A55 cores
+
+validators:                       # IP -> validator/door mapping; unknown IPs are reported as "ip-a.b.c.d"
+  - { ip: 10.42.0.11, validator_id: "V1", door_id: "D1" }
+  - { ip: 10.42.0.12, validator_id: "V2", door_id: "D2" }
+
+session:
+  idle_timeout_s: 120
+  silence_timeout_s: 30
+
+detector:
+  success_policy: indication      # indication | indication_or_write | emv_status
+  decision_window_ms: 3000
+  same_carrier_merge_ms: 1500
+  require_ack: false              # true: an indication counts only after the reader confirms it
+  approve:
+    - { type: gui_picture, ids: [APPROVED, APPROVED_DISCOUNT] }
+    - { type: leds, green: true }
+    - { type: turnstile_pass }
+    # - { type: gui_text, regex: "оплачено|проход разрешён", icase: true }
+    # - { type: rgb_color, color: 0x00FF00, tolerance: 40 }
+  reject:
+    - { type: gui_picture, ids: [REJECTED] }
+    - { type: leds, red: true }
+
+aggregation:
+  match_scope: vehicle            # vehicle | door
+  post_close_tail_s: 120
+  fallback_window_s: 300
+
+privacy:
+  secret_file: /var/lib/camai/irbridge/secret.key
+  raw_capture:                    # diagnostics only: raw traffic contains card data
+    enabled: false
+    max_mb: 50
+    max_age_h: 24
+    dir: /var/lib/camai/irbridge/raw
+
+storage:
+  db_path: /var/lib/camai/irbridge/events.db
+  events_retention_days: 30
+  intervals_retention_days: 90
+  max_db_mb: 512
+
+mqtt:
+  enabled: true
+  url: tcp://127.0.0.1:1883
+  # client_id: irbridge-BUS-0001
+  # username: ""
+  # password: ""
+  tls: { enabled: false }
+  topic_prefix: camai
+
+http:
+  listen: ["127.0.0.1:8095"]
+
+log:
+  level: info

@@ -1,0 +1,16 @@
+syntax = "proto2";
+
+import "mifare/av2/args.proto";
+
+package mifare.av2.host_auth;
+
+// Perform SAM AV2 Authenticate Host Command
+message AuthenticateHost {
+    // Specifies SAM AV2 arguments that will be used in authentication
+    required mifare.av2.args.AuthenticationArguments args = 1;
+
+    // AES128 key to be used in authentication
+    optional bytes key = 2;
+}
+
+// No data carried with successful response

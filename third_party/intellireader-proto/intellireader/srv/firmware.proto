@@ -1,0 +1,41 @@
+syntax = "proto2";
+
+package srv.firmware;
+
+// Firmware manifest
+message FirmwareManifest {
+    // Version of the firmware
+    required string version = 1;
+
+    // List of firmware images
+    repeated FirmwareImage images = 2;
+}
+
+// Firmware image
+message FirmwareImage {
+    // Kind of the image
+    required FirmwareImageKind kind = 1;
+
+    /* Offset of the image in bytes.
+       Note that the value of the offset depends on FirmwareImage origin:
+
+        - offset that is returned as part of the `srv.firmware_update.Prepare`
+        command's response is from the start of the file;
+
+        - offset that is inside an IRF package is from
+        the start of the images (i.e. it does not include 128 bytes of the header).
+    */
+    required uint32 offset = 2;
+
+    // Size of the image in bytes
+    required uint32 size = 3;
+}
+
+enum FirmwareImageKind {
+    UNSPECIFIED_FW_IMAGE_KIND = 0;
+    ESPRESSO = 1;
+    ESPRESSO_WIFI = 2;
+    HUNTER = 3;
+    TOPPING = 4;
+    ESPRESSO_BLE = 5;
+}

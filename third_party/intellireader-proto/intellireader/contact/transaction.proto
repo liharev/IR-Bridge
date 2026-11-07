@@ -1,0 +1,74 @@
+syntax = "proto2";
+
+import "contact/emv_tag.proto";
+import "pinpad/online_pin.proto";
+import "pinpad/secure_entry.proto";
+
+package contact.transaction;
+
+// Perform contact transaction
+message PerformTransaction {
+    // Whole Amount, Authorized (0x9F02) including fractional part ('cents')
+    // with maximum value '999999999999'
+    required uint64 amount_authorized = 1;
+
+    // Transaction Date (0x9A)
+    required bytes transaction_date = 2;
+
+    // Transaction Type (0x9C)
+    required bytes transaction_type = 3;
+
+    // Terminal Country Code (0x9F1A)
+    required bytes terminal_country_code = 4;
+
+    // Transaction Time (0x9F21)
+    required bytes transaction_time = 5;
+
+    // Transaction Currency Code (0x5F2A)
+    required bytes transaction_currency_code = 6;
+
+    // Indicates the name and location of the merchant (0x9F4E)
+    optional bytes merchant_name_and_location = 7;
+
+    // Classifies the type of business being done by the merchant (0x9F15)
+    optional bytes merchant_category_code = 8;
+
+    // Designates the unique location of the Terminal (0x9F1C)
+    optional bytes terminal_identification = 9;
+
+    // Parameters used for online PIN entry dialog
+    optional pinpad.online_pin.EnterOnlinePin online_pin_params = 10;
+
+    // Parameters used for offline PIN entry dialog
+    optional pinpad.secure_entry.SecureEntry offline_pin_params = 11;
+}
+
+// Result of PerformTransaction
+message TransactionResult {
+    // Status of contact transaction
+    required TransactionStatus status = 1;
+
+    // EMV tags related to transaction
+    repeated contact.emv_tag.EmvTag emv_tags = 2;
+
+    // Describes reason due to unable perform transaction
+    optional string error_reason = 3;
+
+    // Encrypted PIN-block created by the reader for online authorization
+    optional bytes online_pin_block = 4;
+}
+
+// Status of transaction
+enum TransactionStatus {
+    // Transaction is authorized offline
+    APPROVED = 0;
+
+    // Transaction is declined offline
+    DECLINED = 1;
+
+    // Unable to perform transaction, see error_reason field
+    UNABLE_PERFORM_TRANSACTION = 2;
+
+    // Transaction is declined offline due to card is expired
+    CARD_EXPIRED = 3;
+}

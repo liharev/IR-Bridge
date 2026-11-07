@@ -1,0 +1,43 @@
+syntax = "proto2";
+
+package misc.status;
+
+// Get device status
+message GetDeviceStatus {
+}
+
+// Device status information
+message DeviceStatus {
+    // Time (in seconds) left to restart
+    optional uint32 time_left_to_restart = 1;
+
+    // Status of anti-tamper sensors
+    optional AntiTamperSensor anti_tamper = 2;
+
+    // Status of anti-removal protection
+    optional AntiRemovalProtection anti_removal = 3;
+}
+
+// Device anti-tamper sensors
+message AntiTamperSensor {
+    // Whether anti-tamper sensors are broken/violated
+    required bool broken = 1;
+
+    // Sensors break reason
+    optional string break_reason = 2;
+}
+
+// Device anti-tamper sensors
+message AntiRemovalProtection {
+    // Current state of anti-removal protection
+    required AntiRemovalProtState state = 1;
+}
+
+// State of anti-removal protection
+enum AntiRemovalProtState {
+    // Protection is activated
+    ACTIVATED = 0;
+
+    // Protection is deactivated
+    DEACTIVATED = 1;
+}

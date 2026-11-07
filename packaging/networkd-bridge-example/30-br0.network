@@ -1,0 +1,8 @@
+# The bridge itself has no IP address: the module only listens (AF_PACKET on br0).
+[Match]
+Name=br0
+
+[Network]
+LinkLocalAddressing=no
+IPv6AcceptRA=no
+ConfigureWithoutCarrier=yes

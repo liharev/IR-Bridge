@@ -1,0 +1,21 @@
+syntax = "proto2";
+
+package misc.echo;
+
+// Request reader just response with same data
+message GetEcho {
+    // Reply with `Pending` message before actual response
+    optional bool send_pending = 1 [default = true];
+
+    // Size of `echo` field in the response (max. 4096)
+    optional uint32 reply_size = 2;
+
+    // Any data
+    optional bytes data = 3;
+}
+
+// Response to `GetEcho` request
+message Echo {
+    // Echoed from `data` field of the request
+    optional bytes echo = 1;
+}

@@ -1,0 +1,7 @@
+# Transparent bridge for capture.mode: bridge. Copy to /etc/systemd/network/.
+[NetDev]
+Name=br0
+Kind=bridge
+
+[Bridge]
+STP=no

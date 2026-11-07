@@ -1,0 +1,17 @@
+syntax = "proto2";
+
+import "contact/card_slot.proto";
+
+package contact.power_on;
+
+// Power on card
+message PowerOnCard {
+    // Card slot in the reader
+    required contact.card_slot.CardSlot slot = 1;
+}
+
+// Information returned by the card
+message ContactCard {
+    // Part of the Answer To Reset named as 'Historical Bytes'
+    required bytes historical_bytes = 1;
+}

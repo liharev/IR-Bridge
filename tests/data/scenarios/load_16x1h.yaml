@@ -1,0 +1,83 @@
+# Load test (not part of ctest): 16 validators, 1 hour of polling at about 200 frames/s in total,
+# one validation per validator every 4 minutes. Use with tcpreplay on the mirror interface or
+# irbridge-pcaptool replay to measure CPU, RSS and decision-to-publication latency.
+start: "2026-11-07T08:00:00.000+03:00"
+steps:
+  - { action: open, validator: 10.42.0.11 }
+  - { action: open, validator: 10.42.0.12 }
+  - { action: open, validator: 10.42.0.13 }
+  - { action: open, validator: 10.42.0.14 }
+  - { action: open, validator: 10.42.0.15 }
+  - { action: open, validator: 10.42.0.16 }
+  - { action: open, validator: 10.42.0.17 }
+  - { action: open, validator: 10.42.0.18 }
+  - { action: open, validator: 10.42.0.19 }
+  - { action: open, validator: 10.42.0.20 }
+  - { action: open, validator: 10.42.0.21 }
+  - { action: open, validator: 10.42.0.22 }
+  - { action: open, validator: 10.42.0.23 }
+  - { action: open, validator: 10.42.0.24 }
+  - { action: open, validator: 10.42.0.25 }
+  - { action: open, validator: 10.42.0.26 }
+  - { action: device_info, validator: 10.42.0.11 }
+  - { action: device_info, validator: 10.42.0.12 }
+  - { action: device_info, validator: 10.42.0.13 }
+  - { action: device_info, validator: 10.42.0.14 }
+  - { action: device_info, validator: 10.42.0.15 }
+  - { action: device_info, validator: 10.42.0.16 }
+  - { action: device_info, validator: 10.42.0.17 }
+  - { action: device_info, validator: 10.42.0.18 }
+  - { action: device_info, validator: 10.42.0.19 }
+  - { action: device_info, validator: 10.42.0.20 }
+  - { action: device_info, validator: 10.42.0.21 }
+  - { action: device_info, validator: 10.42.0.22 }
+  - { action: device_info, validator: 10.42.0.23 }
+  - { action: device_info, validator: 10.42.0.24 }
+  - { action: device_info, validator: 10.42.0.25 }
+  - { action: device_info, validator: 10.42.0.26 }
+  - action: loop
+    repeat: 60
+    steps:
+      - action: loop
+        repeat: 260
+        steps:
+          - { action: echo, validator: 10.42.0.11 }
+          - { action: echo, validator: 10.42.0.12 }
+          - { action: echo, validator: 10.42.0.13 }
+          - { action: echo, validator: 10.42.0.14 }
+          - { action: echo, validator: 10.42.0.15 }
+          - { action: echo, validator: 10.42.0.16 }
+          - { action: echo, validator: 10.42.0.17 }
+          - { action: echo, validator: 10.42.0.18 }
+          - { action: echo, validator: 10.42.0.19 }
+          - { action: echo, validator: 10.42.0.20 }
+          - { action: echo, validator: 10.42.0.21 }
+          - { action: echo, validator: 10.42.0.22 }
+          - { action: echo, validator: 10.42.0.23 }
+          - { action: echo, validator: 10.42.0.24 }
+          - { action: echo, validator: 10.42.0.25 }
+          - { action: echo, validator: 10.42.0.26 }
+      - { action: bank_card, validator: 10.42.0.11 }
+      - { action: indicate, validator: 10.42.0.11, kind: approve }
+      - { action: bank_card, validator: 10.42.0.12 }
+      - { action: indicate, validator: 10.42.0.12, kind: approve }
+      - { action: bank_card, validator: 10.42.0.13 }
+      - { action: indicate, validator: 10.42.0.13, kind: approve }
+      - { action: bank_card, validator: 10.42.0.14 }
+      - { action: indicate, validator: 10.42.0.14, kind: approve }
+  - { action: close, validator: 10.42.0.11 }
+  - { action: close, validator: 10.42.0.12 }
+  - { action: close, validator: 10.42.0.13 }
+  - { action: close, validator: 10.42.0.14 }
+  - { action: close, validator: 10.42.0.15 }
+  - { action: close, validator: 10.42.0.16 }
+  - { action: close, validator: 10.42.0.17 }
+  - { action: close, validator: 10.42.0.18 }
+  - { action: close, validator: 10.42.0.19 }
+  - { action: close, validator: 10.42.0.20 }
+  - { action: close, validator: 10.42.0.21 }
+  - { action: close, validator: 10.42.0.22 }
+  - { action: close, validator: 10.42.0.23 }
+  - { action: close, validator: 10.42.0.24 }
+  - { action: close, validator: 10.42.0.25 }
+  - { action: close, validator: 10.42.0.26 }

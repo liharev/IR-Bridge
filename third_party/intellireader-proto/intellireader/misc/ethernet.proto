@@ -1,0 +1,30 @@
+syntax = "proto2";
+
+package misc.ethernet;
+
+// Statistic of built-in ethernet switch
+message Statistic {
+    // Port1 of the switch
+    optional PortStats port1 = 1;
+
+    // Port2 of the switch
+    optional PortStats port2 = 2;
+
+    // Internal port of the switch
+    optional PortStats port3 = 3;
+}
+
+// Statistic for one ethernet port
+message PortStats {
+    // Total transmitted ethernet frames
+    required uint32 tx_packets = 1;
+
+    // Total received ethernet frames
+    required uint32 rx_packets = 2;
+
+    // Total detected errors on received frames
+    required uint32 rx_errors = 3;
+
+    // Dropped ethernet frames
+    required uint32 txrx_dropped = 4;
+}

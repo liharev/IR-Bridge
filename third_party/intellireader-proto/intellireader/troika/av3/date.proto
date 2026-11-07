@@ -1,0 +1,14 @@
+syntax = "proto2";
+
+package troika.av3.date;
+
+message Date {
+    // Day of month: 1-31
+    required uint32 day = 1;
+
+    // Month: 1-12
+    required uint32 month = 2;
+
+    // Year: 0-255
+    required uint32 year = 3;
+}

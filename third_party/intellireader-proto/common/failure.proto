@@ -1,0 +1,132 @@
+syntax = "proto2";
+
+package common.failure;
+
+enum Error {
+    // Any failure that does not described by certain error
+    GENERAL_FAIL = 1;
+
+    // NFC (contactless) module error
+    NFC_ERROR = 2;
+
+    // Incoming message have wrong checksum
+    CHECKSUM_MISMATCH = 3;
+
+    // Incoming message's payload parsing is failed
+    PAYLOAD_PARSING_ERROR = 4;
+
+    // Incoming message truncated (due to intercharacter timeout or whole message timeout)
+    TRUNCATED_MESSAGE = 5;
+
+    // Incoming message too big
+    MESSAGE_TOO_BIG = 6;
+
+    // First two bytes of message are not equal to 'IR'
+    UNEXPECTED_HEADER = 7;
+
+    // IR module receives unexpected command
+    UNEXPECTED_COMMAND = 8;
+
+    // Contactless cards collision occurred
+    CLESS_CARDS_COLLISION_ERROR = 9;
+
+    // Timeout defined for command is expired
+    TIMEOUT_EXPIRED = 10;
+
+    // Command processing has been stopped by 'Control' message
+    PROCESSING_STOPPED = 11;
+
+    // Unable to process command due to configuration error
+    CONFIGURATION_ERROR = 12;
+
+    // No answer from the card
+    CARD_TIMEOUT = 13;
+
+    // IR module receives unsupported command
+    UNSUPPORTED_COMMAND = 14;
+
+    // One (or more) parameters in request invalid
+    INVALID_PARAMETER = 15;
+
+    // An error occurred on transmitting or receiving NFC (Contactless) frame
+    NFC_TRANSMISSION_ERROR = 16;
+
+    // Mifare card returns NAK to the reader's command
+    MIFARE_CARD_NOT_ACKNOWLEDGE_COMMAND = 17;
+
+    // Command cancelled by cardholder (end user of device)
+    CANCELLED_BY_CARDHOLDER = 18;
+
+    // Security functions are restricted by the device's security monitor
+    SECURITY_FUNCTIONS_RESTRICTED = 19;
+
+    // Mifare Plus card authentication error
+    MFP_AUTHENTICATION_ERROR = 20;
+
+    // Contact Card (ICC) is not present (inserted) in the reader
+    ICC_IS_NOT_PRESENT = 21;
+
+    // Contact Card (ICC) is not ready to work (probably not powered)
+    ICC_IS_NOT_READY = 22;
+
+    // No answer from the Contact Card (ICC)
+    ICC_TIMEOUT = 23;
+
+    // Command requires an absent hardware module
+    ABSENT_HARDWARE_MODULE = 24;
+
+    // Mifare SAM AV2 conditions of use not satisfied
+    SAM_AV2_CONDITIONS_NOT_SATISFIED = 25;
+
+    // Mifare SAM AV2 authentication error
+    SAM_AV2_AUTHENTICATION_ERROR = 26;
+
+    // Mifare Classic authentication error
+    MFC_AUTHENTICATION_ERROR = 27;
+
+    // Limit to retry operation is out
+    RETRY_LIMIT_IS_OUT = 28;
+
+    // Time to retry operation is out
+    RETRY_TIME_IS_OUT = 29;
+
+    // IntelliReader device is busy due to processing previous request
+    INTELLIREADER_IS_BUSY = 30;
+
+    // Poll For Event requires at least one action
+    AT_LEAST_ONE_ACTION_REQUIRED = 31;
+
+    // Command requires unsupported feature
+    UNSUPPORTED_FEATURE = 32;
+
+    // QR-code hardware is absent or broken
+    ABSENT_QRCODE_HARDWARE = 33;
+
+    // Background operation is in progress, try again later
+    OPERATION_IN_PROGRESS = 34;
+
+    // QR-code hardware error
+    QRCODE_HARDWARE_ERROR = 35;
+}
+
+message FailureResponse {
+    // Error causes failure
+    required Error error = 1;
+
+    // Carries additional context to error as arbitrary text
+    optional string error_string = 2;
+
+    // Extended error details
+    oneof error_details {
+        // Additional information in case of Mifare error
+        MifareErrorAt mifare_error_at = 3;
+    }
+}
+
+message MifareErrorAt {
+    // Mifare sector where error is occured
+    required uint32 sector_number = 1;
+
+    // Mifare block where error is occured
+    optional uint32 block_number = 2;
+}

@@ -1,0 +1,55 @@
+syntax = "proto2";
+
+package contactless.poll;
+
+message PollForToken {
+    reserved 5;
+
+    // Timeout of poll for token to be present
+    optional uint32 timeout = 1;
+
+    // In case of dual contactless card (SmartMX, ISO14443A + Mifare)
+    // don't "switch" to ISO14443-4 level
+    optional bool prefer_mifare = 2 [default = false];
+
+    // Optional polling sequence for STM SRI512
+    optional bool poll_stm_sri512 = 3 [default = false];
+
+    // Polling mode
+    optional PollingMode polling_mode = 4 [default = POLLING_WITH_PAUSES];
+
+    // Light up the polling LED before this command processing
+    optional bool light_up_led = 6 [default = false];
+
+    // Optional polling sequence for ISO15693 compatible cards
+    optional bool poll_iso15693 = 7 [default = false];
+
+    // Optional polling sequence for ASK C.ticket CTS compatible cards
+    optional bool poll_ask_cts = 8 [default = false];
+
+    // Optional polling sequence for FeliCa compatible cards
+    optional bool poll_felica = 9 [default = false];
+
+    // Optional polling LED mode
+    optional PollingLed polling_led = 10 [default = POLLING_LED_BLUE];
+}
+
+// Polling mode
+enum PollingMode {
+    // Continous polling periodically interrupted by pauses
+    POLLING_WITH_PAUSES = 1;
+
+    // Fully continous (uninterrupted) polling mode
+    CONTINOUS_POLLING = 2;
+
+    // Low power polling mode
+    LOW_POWER_POLLING = 3;
+}
+
+enum PollingLed {
+    // Light up the blue LED only
+    POLLING_LED_BLUE = 0;
+
+    // RGB mode 1
+    POLLING_LED_RGB_MODE_1 = 1;
+}

@@ -1,0 +1,11 @@
+syntax = "proto2";
+
+package mifare.classic.counter.commit;
+
+// Writes (commits) the contents of the internal data register to a block
+message CommitCounter {
+    // Destination block _within_ sector
+    required uint32 dst_block = 1;
+}
+
+// No data carried with successful response

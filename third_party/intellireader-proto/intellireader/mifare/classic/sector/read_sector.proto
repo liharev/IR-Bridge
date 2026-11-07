@@ -1,0 +1,30 @@
+syntax = "proto2";
+
+import "mifare/classic/sector/sector.proto";
+import "mifare/classic/read.proto";
+
+package mifare.classic.sector.read;
+
+// Read multiple sectors
+message ReadSectors {
+    // Sectors to be read
+    repeated mifare.classic.sector.sector.Sector sectors = 1;
+
+    // Whether to read trailer block
+    optional bool read_trailer_block = 2 [default = false];
+}
+
+// Sectors data
+message SectorsData {
+    // Successfully read sectors
+    repeated SectorData sectors_data = 1;
+}
+
+message SectorData {
+    // Number of Mifare Classic sector
+    required uint32 sector_number = 1;
+
+    // Sector's blocks data
+    required mifare.classic.read.Blocks blocks = 2;
+
+}

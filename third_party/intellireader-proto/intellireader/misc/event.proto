@@ -1,0 +1,67 @@
+syntax = "proto2";
+
+package misc.event;
+
+message Event {
+    // Type of the event
+    required EventType event_type = 1;
+
+    // Timestamp of the event, negative offset in milliseconds from the current time
+    required uint32 event_time_offset = 2;
+
+    // Additional information for the event
+    optional string event_info = 3;
+}
+
+enum EventType {
+    // WiFi connection is established
+    WIFI_CONNECTED = 0;
+
+    // WiFi connection is lost
+    WIFI_DISCONNECTED = 1;
+
+    // Reader got IP-address
+    IP_ADDRESS_IS_OBTAINED = 2;
+
+    // TCP connection is established
+    CONNECTION_ESTABLISHED = 3;
+
+    // TCP connection is closed by controller
+    CONNECTION_CLOSED_BY_CONTROLLER = 4;
+
+    // TCP connection is closed by reader
+    CONNECTION_CLOSED_BY_READER = 5;
+
+    // Controller became unreachable by the reader (network issue)
+    CONTROLLER_BECAME_UNREACHABLE = 6;
+
+    // Device (re)boot occured
+    DEVICE_REBOOT = 7;
+
+    // SAM is powered on due to the controller's command
+    SAM_POWERED_ON_BY_COMMAND = 8;
+
+    // SAM is powered off due to the controller's command
+    SAM_POWERED_OFF_BY_COMMAND = 9;
+
+    // SAM is powered on by the reader when controller initiate command that used SAM
+    SAM_POWERED_ON_IMPLICITLY = 10;
+
+    // An error occured during exchange with SAM
+    SAM_EXCHANGE_ERROR = 11;
+
+    // SAM is automatically reset by the reader because command counter exceeded the limit
+    SAM_AUTOMATIC_RESET = 12;
+
+    // External IntelliReader firmware was successfully updated
+    EXTERNAL_INTELLIREADER_FW_UPDATE_SUCCESS = 13;
+
+    // External IntelliReader firmware update failed
+    EXTERNAL_INTELLIREADER_FW_UPDATE_FAILED = 14;
+
+    // External IntelliReader configuration was successfully updated
+    EXTERNAL_INTELLIREADER_CONFIG_UPDATE_SUCCESS = 15;
+
+    // External IntelliReader configuration update failed
+    EXTERNAL_INTELLIREADER_CONFIG_UPDATE_FAILED = 16;
+}

@@ -1,0 +1,8 @@
+# Troika ticket read, approved with the green LED.
+start: "2026-11-07T08:00:00.000+03:00"
+steps:
+  - { action: open, validator: 10.42.0.12 }
+  - { action: troika, validator: 10.42.0.12, uid: "7A6B5C4D" }
+  - { action: indicate, validator: 10.42.0.12, kind: approve, via: leds }
+  - { action: wait, ms: 4000 }
+  - { action: close, validator: 10.42.0.12 }

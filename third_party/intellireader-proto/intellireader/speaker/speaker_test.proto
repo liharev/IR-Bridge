@@ -1,0 +1,21 @@
+syntax = "proto2";
+
+package speaker.speaker_test;
+
+// Test the speaker
+message SpeakerTest {
+    oneof test_type {
+        // Test the speaker by playing a sine wave
+        SineWaveTest sine_wave_test = 1;
+    }
+}
+
+message SineWaveTest {
+    // Frequency of the sine wave in Hz
+    required uint32 frequency_hz = 1;
+
+    // Duration of the sine wave in seconds
+    required uint32 duration_secs = 2;
+}
+
+// No data carried with successful response

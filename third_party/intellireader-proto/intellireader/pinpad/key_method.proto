@@ -1,0 +1,18 @@
+syntax = "proto2";
+
+package pinpad.key_method;
+
+// Key used directly in an operation
+message FixedKey {
+}
+
+// Key use as the Master in the Master/Session scheme
+message MasterSession {
+}
+
+// Initial key in the DUKPT scheme
+message Dukpt {
+    // Initial Key Serial Number (KSN) used in DUKPT.
+    // 10 bytes for DES and 8 bytes for AES
+    required bytes ksn = 1;
+}

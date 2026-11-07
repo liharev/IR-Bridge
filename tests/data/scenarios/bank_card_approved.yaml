@@ -1,0 +1,11 @@
+# Bank card, online authorization, controller shows APPROVED.
+start: "2026-11-07T08:00:00.000+03:00"
+steps:
+  - { action: open, validator: 10.42.0.11 }
+  - { action: device_info, validator: 10.42.0.11, version: "1.56.8607" }
+  - { action: idle_poll, validator: 10.42.0.11, count: 2 }
+  - { action: bank_card, validator: 10.42.0.11, aid: "A0000006581010", uid: "0E264417", amount: 6600 }
+  - { action: wait, ms: 400 }
+  - { action: indicate, validator: 10.42.0.11, kind: approve, via: picture }
+  - { action: wait, ms: 4000 }
+  - { action: close, validator: 10.42.0.11 }

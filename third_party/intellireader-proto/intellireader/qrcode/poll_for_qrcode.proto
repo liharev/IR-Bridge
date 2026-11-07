@@ -1,0 +1,26 @@
+syntax = "proto2";
+
+package qrcode.poll;
+
+import "qrcode/indication.proto";
+
+// Poll for QR-code event
+message PollForQrCode {
+    // Polling for one of the event types
+    optional EventType event_type = 1 [default = RAW_DATA];
+
+    // Time to polling
+    optional uint32 timeout = 2;
+
+    // Indication type of successful read event
+    optional qrcode.indication.Indication read_indication = 3 [default = ONETIME_BEEP];
+}
+
+// Type of the QR-code event is polling for
+enum EventType {
+    // QR-code/Barcode raw data as is
+    RAW_DATA = 0;
+
+    // EMV Consumer Presented QR Code
+    EMV_QR_CODE = 1;
+}

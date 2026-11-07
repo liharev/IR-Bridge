@@ -1,0 +1,21 @@
+syntax = "proto2";
+
+package cipurse.read_value;
+
+// Read the value of the value-record(s)
+message ReadValue {
+    // Short File ID
+    required uint32 short_file_id = 1;
+
+    // How many values read
+    required uint32 count = 2;
+
+    // Number of the first record (in the range of 1 to 254)
+    optional uint32 first_record = 3 [default = 1];
+}
+
+message Values {
+    // Value-record(s) value(s)
+    repeated sint32 values = 1 [packed=true];
+}
+

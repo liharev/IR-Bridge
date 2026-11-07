@@ -1,0 +1,48 @@
+syntax = "proto2";
+
+package gui.menu_dialog;
+
+// Shows the menu and interacts with user to select an item
+message MenuDialog {
+    // The dialog caption
+    required string caption = 1;
+
+    // List of the items to show to the user
+    required ItemList item_list = 2;
+
+    // Inactivity timeout in seconds
+    optional uint32 timeout = 3;
+
+    // Start from LeafItem with `show_item_id` instead of root menu
+    optional uint32 show_item_id = 4;
+}
+
+message ItemList {
+    // List of the menu items
+    repeated Item items = 1;
+}
+
+message LeafItem {
+    // The ID that will be returned when user selected leaf item
+    required uint32 id = 1;
+}
+
+message Item {
+    // Text displayed on menu item
+    required string text = 1;
+
+    // The menu item
+    oneof item {
+        // End (leaf) menu item
+        LeafItem leaf_item = 2;
+
+        // Menu item contains sub-menu
+        ItemList submenu = 3;
+    }
+}
+
+// Message returned when user selected leaf item
+message SelectedItem {
+    // The ID of leaf item was selected
+    required uint32 id = 1;
+}

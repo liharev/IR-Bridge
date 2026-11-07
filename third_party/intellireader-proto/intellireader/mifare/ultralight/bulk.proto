@@ -1,0 +1,62 @@
+syntax = "proto2";
+
+import "mifare/ultralight/auth.proto";
+import "mifare/ultralight/read.proto";
+import "mifare/ultralight/write.proto";
+import "mifare/ultralight/password.proto";
+
+import "mifare/ultralight/counter/get.proto";
+import "mifare/ultralight/counter/increment.proto";
+
+package mifare.ultralight.bulk;
+
+message BulkOperation {
+    // Sequence of the Mifare Ultralight commands
+    repeated Command operations = 1;
+}
+
+message BulkResult {
+    // Sequence of the results of Mifare Ultralight commands
+    repeated CommandResult results = 1;
+}
+
+message Command {
+    oneof MfrCmd {
+        // Read Mifare Ultralight pages
+        mifare.ultralight.read.ReadPages read_pages = 1;
+
+        // Write pages to Mifare Ultralight
+        mifare.ultralight.write.WritePages write_pages = 2;
+
+        // Read value of Mifare Ultralight EV1 built-in counter
+        mifare.ultralight.counter.get.GetCounter get_counter = 3;
+
+        // Increment Mifare Ultralight EV1 built-in counter
+        mifare.ultralight.counter.increment.IncrementCounter increment_counter = 4;
+
+        // Mifare Ultralight C 3DES Authentication using clear key
+        mifare.ultralight.auth.ClearKey auth_on_clear_key = 5;
+
+        // Mifare Ultralight C 3DES Authentication using SAM AV2
+        mifare.ultralight.auth.SamKey auth_on_sam_key = 6;
+
+        // Mifare Ultralight EV1 password based Authentication using clear key
+        mifare.ultralight.password.ClearPassword auth_clear_password = 7;
+
+        // Mifare Ultralight EV1 password based Authentication using NXP SAM AV3 module
+        mifare.ultralight.password.SamPassword auth_sam_password = 8;
+
+        // Mifare Ultralight C 3DES Authentication using key from internal secure storage
+        mifare.ultralight.auth.InternalKey auth_on_internal_key = 9;
+    }
+}
+
+message CommandResult {
+    oneof MfrResult {
+        // Response to ReadPages command
+        mifare.ultralight.read.Pages pages = 1;
+
+        // Response to GetCounter command
+        mifare.ultralight.counter.get.CounterValue counter_value = 2;
+    }
+}

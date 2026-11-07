@@ -1,0 +1,18 @@
+syntax = "proto2";
+
+package mifare.ultralight.read;
+
+// Read Mifare Ultralight pages
+message ReadPages {
+    // Start page address
+    required uint32 start_address = 1;
+
+    // Page count to read
+    required uint32 page_count = 2;
+}
+
+// Pages that were read from the card
+message Pages {
+    // Pages data
+    required bytes data = 1;
+}

@@ -1,0 +1,9 @@
+syntax = "proto2";
+
+package touchscreen.widget;
+
+// Widget ID on the touchscreen
+message WidgetId {
+    // ID of the pressed widget
+    required uint32 id = 1;
+}

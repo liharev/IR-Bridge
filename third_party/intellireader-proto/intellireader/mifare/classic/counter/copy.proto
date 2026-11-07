@@ -1,0 +1,15 @@
+syntax = "proto2";
+
+package mifare.classic.counter.copy;
+
+// Copies the contents of a block
+message CopyCounter {
+    // Source block _within_ sector
+    required uint32 src_block = 1;
+
+    // Destination block _within_ sector
+    // If absent, copy to the internal data register
+    optional uint32 dst_block = 2;
+}
+
+// No data carried with successful response

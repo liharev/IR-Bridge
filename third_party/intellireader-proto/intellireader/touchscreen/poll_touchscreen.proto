@@ -1,0 +1,21 @@
+syntax = "proto2";
+
+package touchscreen.poll;
+
+// Poll touchscreen for an event
+message PollTouchscreen {
+    // Polling for one of the event types
+    required EventType event_type = 1;
+
+    // Time to polling touchscreen
+    optional uint32 timeout = 2;
+}
+
+// Type of the touchscreen event is polling for
+enum EventType {
+    // ID of the pressed widget
+    WIDGET_ID = 0;
+
+    // Screen (x,y) coordinates pressed on
+    COORDINATES = 1;
+}

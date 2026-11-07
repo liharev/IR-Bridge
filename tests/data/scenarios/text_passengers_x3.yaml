@@ -1,0 +1,8 @@
+# Approval by text "ОПЛАЧЕНО x3": three passengers on one card.
+start: "2026-11-07T08:00:00.000+03:00"
+steps:
+  - { action: open, validator: 10.42.0.12 }
+  - { action: bank_card, validator: 10.42.0.12, uid: "0E264417", amount: 19800 }
+  - { action: indicate, validator: 10.42.0.12, kind: approve, via: text, text: "ОПЛАЧЕНО x3" }
+  - { action: wait, ms: 4000 }
+  - { action: close, validator: 10.42.0.12 }

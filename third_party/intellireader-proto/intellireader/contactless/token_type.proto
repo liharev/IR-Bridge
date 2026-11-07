@@ -1,0 +1,65 @@
+syntax = "proto2";
+
+package contactless.token_type;
+
+// Type of contactless card
+enum TokenType {
+    // Reader unable to determinate card type
+    UNKNOWN = 0;
+
+    // Card compatible with ISO 14443 Layer 4A (used by EMVCo)
+    ISO_14443_4A = 1;
+
+    // Card compatible with ISO 14443 Layer 4B (used by EMVCo)
+    ISO_14443_4B = 2;
+
+    // Mifare Classic 1K
+    MIFARE_CLASSIC_1K = 3;
+
+    // Mifare Classic 2K
+    MIFARE_CLASSIC_2K = 4;
+
+    // Mifare Classic 4K
+    MIFARE_CLASSIC_4K = 5;
+
+    // Mifare Mini
+    MIFARE_CLASSIC_MINI = 6;
+
+    // Mifare Plus X 2K in SL2
+    MIFARE_PLUS_X_SL2_2K = 7;
+
+    // Mifare Plus X 4K in SL2
+    MIFARE_PLUS_X_SL2_4K = 8;
+
+    // Mifare Ultralight (or Ultralight C)
+    MIFARE_UL_OR_ULC = 9;
+
+    // Dual card: Smart MX (ISO14443A) + Mifare Classic 1K
+    SMART_MX_WITH_MIFARE_1K = 10;
+
+    // Dual card: Smart MX (ISO14443A) + Mifare Classic 4K
+    SMART_MX_WITH_MIFARE_4K = 11;
+
+    TAG_N_PLAY = 12;
+
+    // STMicroelectronics SRI512 tag
+    STM_SRI512 = 13;
+
+    // Generic ISO15693 compatible card
+    GENERIC_ISO15693 = 14;
+
+    // NXP ICODE SLI
+    ICODE_SLI = 15;
+
+    // NXP ICODE SLIX
+    ICODE_SLIX = 16;
+
+    // NXP ICODE SLIX2
+    ICODE_SLIX2 = 17;
+
+    // ASK C.ticket CTS512B
+    ASK_CTS512B = 18;
+
+    // Sony FeliCa
+    FELICA = 19;
+}

@@ -1,0 +1,7 @@
+# The reader resets the connection while a presentment waits for a decision: ABORTED.
+start: "2026-11-07T08:00:00.000+03:00"
+steps:
+  - { action: open, validator: 10.42.0.11 }
+  - { action: bank_card, validator: 10.42.0.11 }
+  - { action: wait, ms: 200 }
+  - { action: reset, validator: 10.42.0.11 }

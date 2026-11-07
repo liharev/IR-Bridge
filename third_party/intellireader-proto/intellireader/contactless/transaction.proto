@@ -1,0 +1,137 @@
+syntax = "proto2";
+
+import "contactless/poll_for_token.proto";
+import "contactless/token.proto";
+import "contactless/emv_tag.proto";
+import "contactless/token_carrier_type.proto";
+import "contactless/indication.proto";
+import "contactless/aid_parameters.proto";
+
+package contactless.transaction;
+
+// Perform contactless transaction
+message PerformTransaction {
+    // Parameters used in Poll For Token procedure
+    required contactless.poll.PollForToken poll_for_token = 1;
+
+    // Whole Amount, Authorized (0x9F02) including fractional part ('cents')
+    // with maximum value '999999999999'
+    required uint64 amount_authorized = 2;
+
+    // Transaction Date (0x9A)
+    required bytes transaction_date = 3;
+
+    // Transaction Type (0x9C)
+    required bytes transaction_type = 4;
+
+    // Terminal Country Code (0x9F1A)
+    required bytes terminal_country_code = 5;
+
+    // Transaction Time (0x9F21)
+    required bytes transaction_time = 6;
+
+    // Transaction Currency Code (0x5F2A)
+    required bytes transaction_currency_code = 7;
+
+    // DEPRECATED: use aid_specific field
+    optional uint64 mastercard_amount = 8;
+
+    // DEPRECATED: use aid_specific field
+    optional uint64 maestro_amount = 9;
+
+    // DEPRECATED: use aid_specific field
+    optional uint64 mir_amount = 10;
+
+    // DEPRECATED: use aid_specific field
+    optional uint64 troika_amount = 11;
+
+    // DEPRECATED: use aid_specific field
+    optional uint64 unionpay_amount = 12;
+
+    // Parameters desired for AID
+    repeated contactless.parameters.AidSpecificParams aid_specific = 13;
+
+    // Indicates the name and location of the merchant (0x9F4E)
+    optional bytes merchant_name_and_location = 16;
+
+    // Classifies the type of business being done by the merchant (0x9F15)
+    optional bytes merchant_category_code = 17;
+
+    // Designates the unique location of the Terminal (0x9F1C)
+    optional bytes terminal_identification = 18;
+
+    // Enable debug behavior
+    optional bool debug = 19 [default = false];
+
+    // Indication (LEDs, buzzer) used during transaction
+    optional contactless.indication.Indication indication = 20 [default = FULL];
+}
+
+// Result of PerformTransaction
+message TransactionResult {
+    // Status of contactless transaction
+    required TransactionStatus status = 1;
+
+    // Level1 related information about card
+    required contactless.token.Token token = 2;
+
+    // EMV tags related to transaction
+    repeated contactless.emv_tag.EmvTag emv_tags = 3;
+
+    // Last command sent to the card
+    optional bytes last_cmd = 4;
+
+    // Status bytes (SW1 SW2) of last response of the card
+    optional bytes last_sw_bytes = 5;
+
+    // Describes reason due to unable perform transaction
+    optional string error_reason = 6;
+
+    // Type of the token carrier
+    optional contactless.token_carrier_type.TokenCarrierType token_carrier_type = 7;
+
+    // SensitiveData message encrypted on the Controller's Public Key
+    optional bytes encrypted_sensitive_data = 8;
+
+    // Hashed value of the Application PAN
+    optional bytes pan_hash = 9;
+
+    // Masked value of the Application PAN
+    optional string masked_pan = 10;
+
+    // Whether card's response time exceeds the threshold defined by the configuration
+    optional bool card_response_exceeds_threshold = 11;
+}
+
+// Status of transaction
+enum TransactionStatus {
+    // Online authorization is required to finish transaction
+    ONLINE_AUTHORIZATION_REQUIRED = 0;
+
+    // Transaction is authorized offline
+    OFFLINE_APPROVED = 1;
+
+    // Transaction is declined offline
+    OFFLINE_DECLINED = 2;
+
+    // If it is possible use another (contact) interface
+    USE_CONTACT_INTERFACE = 3;
+
+    // Unable to perform transaction, see error_reason field
+    UNABLE_PERFORM_TRANSACTION = 4;
+
+    // Non-EMV (banking) card present to the reader
+    NON_EMV_CARD = 5;
+
+    // Transaction is declined offline due to card is expired
+    CARD_EXPIRED = 6;
+
+    // Cardholder need to be authenticated on the their device
+    AUTHORIZATION_ON_CARDHOLDER_DEVICE_REQUIRED = 7;
+}
+
+// Transaction specific sensitive data
+message SensitiveData {
+    // EMV tags contained cardholder's sensitive data
+    repeated contactless.emv_tag.EmvTag emv_tags = 1;
+}

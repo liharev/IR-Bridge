@@ -1,0 +1,12 @@
+syntax = "proto2";
+
+package mifare.plus.sector;
+
+// Type of Mifare Plus sector key
+enum SectorKeyType {
+    // The A key
+    TYPE_A = 0;
+
+    // The B key
+    TYPE_B = 1;
+}

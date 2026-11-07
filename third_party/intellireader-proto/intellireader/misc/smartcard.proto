@@ -1,0 +1,23 @@
+syntax = "proto2";
+
+import "contact/card_slot.proto";
+
+package misc.smartcard;
+
+// Statistic of smartcard slots
+message Statistic {
+    // Smartcard slots
+    repeated SlotStats slots = 1;
+}
+
+// Statistic for one smartcard slot
+message SlotStats {
+    // Card slot in the reader
+    required contact.card_slot.CardSlot slot = 1;
+
+    // Total reset attempts
+    required uint32 resets = 2;
+
+    // Commands count passed after last reset
+    required uint32 commands = 3;
+}

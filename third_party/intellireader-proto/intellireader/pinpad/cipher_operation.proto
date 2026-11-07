@@ -1,0 +1,8 @@
+syntax = "proto2";
+
+package pinpad.cipher_operation;
+
+enum CipherOperation {
+    ENCRYPTION = 0;
+    DECRYPTION = 1;
+}

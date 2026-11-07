@@ -1,0 +1,18 @@
+syntax = "proto2";
+
+import "mifare/classic/auth.proto";
+
+package mifare.classic.sector.sector;
+
+message Sector {
+    oneof authentication_method {
+        // Authenticates to Mifare Classic sector using clear key
+        mifare.classic.auth.ClearKey clear_key = 1;
+
+        // Authenticates to Mifare Classic sector using NXP SAM AV2 module
+        mifare.classic.auth.SamKey sam_key = 2;
+
+        // Authenticates to Mifare Classic sector using internal key
+        mifare.classic.auth.InternalKey internal_key = 3;
+    }
+}

@@ -1,0 +1,55 @@
+syntax = "proto2";
+
+import "pinpad/cipher_mode.proto";
+
+package pinpad.encryption_key;
+
+message EncryptionKey {
+    oneof encryption_key {
+        // Fixed key
+        FixedKey fixed_key = 1;
+
+        // X9.17 Session Key
+        SessionKeyX917 session_key_x_9_17 = 2;
+
+        // TR-31 Session Key
+        SessionKeyTR31 session_key_tr_31 = 3;
+
+        // DUKPT Key
+        DukptKey dukpt_key = 4;
+    }
+}
+
+// X9.17 Master/Session Key parameters
+message SessionKeyX917 {
+    // Session Key encrypted on the Master Key
+    required bytes session_key = 1;
+
+    // Cipher mode used for encryption of the Session Key
+    optional pinpad.cipher_mode.CipherMode cipher_mode = 2;
+
+    // Index of Master Key used for the Session Key
+    optional uint32 master_key_index = 3;
+}
+
+// TR-31 Master/Session Key parameters
+message SessionKeyTR31 {
+    // Session Key bundle protected by the Master Key
+    required bytes session_key = 1;
+
+    // Index of Master Key used for the Session Key
+    optional uint32 master_key_index = 2;
+}
+
+// DUKPT Key parameters
+message DukptKey {
+    // Index of the Key
+    optional uint32 key_index = 1;
+}
+
+// Fixed Key parameters
+message FixedKey {
+    // Index of Key used for encryption
+    optional uint32 key_index = 1;
+}
+

@@ -1,0 +1,14 @@
+syntax = "proto2";
+
+package troika.av3.time;
+
+message Time {
+    // Hour: 0-23
+    required uint32 hour = 1;
+
+    // Minute: 0-59
+    required uint32 minute = 2;
+
+    // Second: 0-59
+    required uint32 second = 3;
+}

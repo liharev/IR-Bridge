@@ -1,0 +1,12 @@
+syntax = "proto2";
+
+import "contact/card_slot.proto";
+
+package contact.power_off;
+
+message PowerOffCard {
+    // Card slot in the reader
+    required contact.card_slot.CardSlot slot = 1;
+}
+
+// No data carried with successful response

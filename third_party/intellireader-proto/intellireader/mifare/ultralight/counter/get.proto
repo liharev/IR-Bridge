@@ -1,0 +1,17 @@
+syntax = "proto2";
+
+import "mifare/ultralight/counter/number.proto";
+
+package mifare.ultralight.counter.get;
+
+// Read value of Mifare Ultralight EV1 built-in counter
+message GetCounter {
+    // Counter number
+    required mifare.ultralight.counter.number.CounterNumber counter_number = 1;
+}
+
+// Mifare Ultralight Counter value
+message CounterValue {
+    // Counter value
+    required uint32 value = 1;
+}

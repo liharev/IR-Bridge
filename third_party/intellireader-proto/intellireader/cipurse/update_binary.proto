@@ -1,0 +1,17 @@
+syntax = "proto2";
+
+package cipurse.update_binary;
+
+// Update binary record content
+message UpdateBinary {
+    // Short File ID to be read
+    required uint32 short_file_id = 1;
+
+    // Bytes to be write
+    required bytes data = 2;
+
+    // File offset if any
+    optional uint32 offset = 3 [default = 0];
+}
+
+// No data carried with successful response
